@@ -1,0 +1,6 @@
+.tooltip {
+  display: none;
+}
+p.active {
+  display: block;
+}
