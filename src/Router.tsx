@@ -7,12 +7,18 @@ const ProtectedRoute = lazy(() => {
 const Testroute = lazy(() => {
   return import("./routes/Testroute/Testroute");
 });
+const Register = lazy(() => {
+  return import("./routes/Register/Register");
+});
+const Login = lazy(() => {
+  return import("./routes/Login/Login");
+});
 const Router = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
-        <Route path="/login"></Route>
-        <Route path="/register"></Route>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/register" element={<Register></Register>}></Route>
         <Route path="/forbidden"></Route>
         <Route
           element={

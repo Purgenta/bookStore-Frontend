@@ -1,0 +1,18 @@
+section.login {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 90%;
+  max-width: 500px;
+  min-width: 350px;
+}
+.submit-btn {
+  width: 50%;
+  display: block;
+}

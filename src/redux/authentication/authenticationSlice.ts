@@ -19,23 +19,15 @@ const authenticationSlice = createSlice({
     ...initialState,
   },
   reducers: {
-    authenticate: {
-      reducer: (state, action: PayloadAction<Authentication>) => {
-        state.isAuthenticated = action.payload.isAuthenticated;
-        state.accessToken = action.payload.accessToken;
-        state.role = action.payload.role;
-      },
-      prepare: (accessToken: string, role: Role) => {
-        return { payload: { accessToken, role, isAuthenticated: true } };
-      },
-    },
     updateAccessToken: {
       reducer: (
         state,
         action: PayloadAction<Omit<Authentication, "isAuthenticated">>
       ) => {
+        state.isAuthenticated = true;
         state.accessToken = action.payload.accessToken;
         state.role = action.payload.role;
+        return state;
       },
       prepare: (accessToken: string, role: Role) => {
         return { payload: { accessToken, role } };
@@ -45,5 +37,5 @@ const authenticationSlice = createSlice({
 });
 export const authenticationSelector = (state: RootState) =>
   state.authentication;
-export const { authenticate, updateAccessToken } = authenticationSlice.actions;
+export const { updateAccessToken } = authenticationSlice.actions;
 export default authenticationSlice.reducer;

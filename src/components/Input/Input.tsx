@@ -20,7 +20,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   labelProps?: Label;
 }
 const Input = ({
-  input: { onInputChange, id, type, className },
+  input: { onInputChange, id, type, className: inputClassName },
   labelProps,
   tooltip,
 }: InputProps) => {
@@ -29,7 +29,9 @@ const Input = ({
   return (
     <div className="flex-container">
       {labelProps && (
-        <label className={labelProps.className} htmlFor={id}></label>
+        <label className={labelProps.className} htmlFor={id}>
+          {labelProps.description}
+        </label>
       )}
       <input
         ref={inputRef}
@@ -38,10 +40,14 @@ const Input = ({
         onBlur={() => setFocused(false)}
         id={id}
         type={type}
-        className={className}
+        className={inputClassName || style["input-field"]}
       />
       {tooltip && (
-        <p className={`${tooltip.className} ${style["active"]}`}>
+        <p
+          className={`${tooltip.className || style["tooltip"]} ${
+            focused ? style["active"] : ""
+          }`}
+        >
           {focused && (
             <>
               <FontAwesomeIcon icon={faCircleExclamation} />
