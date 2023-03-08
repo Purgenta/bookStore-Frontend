@@ -1,13 +1,15 @@
 import { useEffect } from "react";
-import axios from "./publicAxiosInstance";
+import { axiosPrivateInstance } from "./publicAxiosInstance";
 import { useSelector } from "react-redux";
 import { authenticationSelector } from "../redux/authentication/authenticationSlice";
+import { useNavigate } from "react-router-dom";
 import useRefreshToken from "./useRefreshToken";
 const useAuthenticetedAxios = () => {
   const authentication = useSelector(authenticationSelector);
   const refreshToken = useRefreshToken();
+  const navigate = useNavigate();
   useEffect(() => {
-    const requestInterceptor = axios.interceptors.request.use(
+    const requestInterceptor = axiosPrivateInstance.interceptors.request.use(
       (config) => {
         if (!config?.headers["Authorization"]) {
           config.headers[
@@ -20,26 +22,30 @@ const useAuthenticetedAxios = () => {
         Promise.reject(error);
       }
     );
-    const responseInterceptor = axios.interceptors.response.use(
+    const responseInterceptor = axiosPrivateInstance.interceptors.response.use(
       (response) => response,
       async (error) => {
         const previousRequest = error?.config;
         if (error?.response?.status === 401 && !previousRequest.sent) {
           previousRequest.sent = true;
-          const refresh = await refreshToken();
-          previousRequest.headers[
-            "Authorization"
-          ] = `Bearer ${refresh.accessToken}`;
-          return axios(previousRequest);
+          try {
+            const refresh = await refreshToken();
+            previousRequest.headers[
+              "Authorization"
+            ] = `Bearer ${refresh.accessToken}`;
+            return axiosPrivateInstance(previousRequest);
+          } catch (exception) {
+            navigate("/login");
+          }
         }
         return Promise.reject(error);
       }
     );
     return () => {
-      axios.interceptors.response.eject(responseInterceptor);
-      axios.interceptors.request.eject(requestInterceptor);
+      axiosPrivateInstance.interceptors.response.eject(responseInterceptor);
+      axiosPrivateInstance.interceptors.request.eject(requestInterceptor);
     };
   }, [authentication, refreshToken]);
-  return axios;
+  return axiosPrivateInstance;
 };
 export default useAuthenticetedAxios;

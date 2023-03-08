@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@100;300;400;500&family=Nunito+Sans:wght@200;300;400;600&display=swap");
 * {
   padding: 0px;
   margin: 0px;
@@ -18,6 +19,7 @@ body {
   flex-direction: column;
   width: 100vw;
   min-height: 100vh;
+  font-family: "Nunito Sans", sans-serif;
 }
 .flex-container {
   display: flex;
