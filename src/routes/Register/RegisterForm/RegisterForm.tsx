@@ -1,6 +1,6 @@
 import style from "../../Login/LoginForm/LoginForm.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faKey } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faKey, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 import validate from "./registerFormValidation";
@@ -12,6 +12,8 @@ type RegisterFormProps = {
 export interface FormValues {
   email: string;
   password: string;
+  name: string;
+  lastName: string;
 }
 const RegisterForm = ({
   submitHandler,
@@ -20,12 +22,15 @@ const RegisterForm = ({
 }: RegisterFormProps) => {
   const formik = useFormik({
     initialValues: {
+      name: "",
+      lastName: "",
       email: "",
       password: "",
     },
+    enableReinitialize: true,
+    validateOnMount: true,
     validate,
     onSubmit: (values) => {
-      console.log("running");
       submitHandler(values.email, values.password);
     },
   });
@@ -41,6 +46,40 @@ const RegisterForm = ({
         </label>
         <div className={style["input-wrapper"]}>
           <FontAwesomeIcon icon={faUser} />
+          <input
+            className={style["auth-input"]}
+            name="name"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            placeholder="Enter your name"
+          />
+        </div>
+        {errors.name && touched.name && (
+          <p className={style["error-message"]}>{errors.name}</p>
+        )}
+        <label className={style["auth-label"]} id="email">
+          Last name
+        </label>
+        <div className={style["input-wrapper"]}>
+          <FontAwesomeIcon icon={faUser} />
+          <input
+            className={style["auth-input"]}
+            name="lastName"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            placeholder="Enter your last name"
+          />
+        </div>
+        {errors.lastName && touched.lastName && (
+          <p className={style["error-message"]}>{errors.lastName}</p>
+        )}
+        <label className={style["auth-label"]} id="email">
+          Email
+        </label>
+        <div className={style["input-wrapper"]}>
+          <FontAwesomeIcon icon={faEnvelope} />
           <input
             className={style["auth-input"]}
             name="email"
@@ -79,7 +118,7 @@ const RegisterForm = ({
         <button
           type="submit"
           className={style["submit-btn"]}
-          disabled={isSubmitting || !formik.isValid || !formik.dirty}
+          disabled={isSubmitting || !formik.isValid}
         >
           Register
         </button>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FormValues } from "./LoginForm/LoginForm";
 import axios from "../../axios/publicAxiosInstance";
 import { useNavigate } from "react-router-dom";
 import style from "./Login.module.css";
@@ -13,12 +14,12 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const sendLoginRequest = (email: string, password: string) => {
+  const sendLoginRequest = (formValues: FormValues) => {
+    console.log(`running`);
     const loginRequest = async () => {
       try {
         const response = await axios.post("account/login", {
-          email,
-          password,
+          ...formValues,
         });
         const userData = response.data as Omit<
           Authentication,
@@ -40,7 +41,8 @@ const Login = () => {
   };
   return (
     <section className={style["authentication"]}>
-      <LoginForm onSubmit={sendLoginRequest} />
+      {error && <p className={style["error-message"]}>{error}</p>}
+      <LoginForm submitHandler={sendLoginRequest} />
     </section>
   );
 };
