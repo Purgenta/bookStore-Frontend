@@ -8,7 +8,7 @@ type Refresh = {
 const useRefreshToken = () => {
   const dispatch = useDispatch();
   const getAccessToken = async (): Promise<Refresh> => {
-    const response = await axios.get("/authentication/refreshToken", {
+    const response = await axios.get("/account/refreshToken", {
       withCredentials: true,
     });
     const {

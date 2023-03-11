@@ -1,18 +1,13 @@
-section.login {
+section.authentication {
   flex-grow: 1;
   display: flex;
   justify-content: center;
-  align-items: center;
-}
-.login-form {
-  display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  width: 90%;
-  max-width: 500px;
-  min-width: 350px;
+  align-items: center;
+  gap: 1rem;
 }
-.submit-btn {
-  width: 50%;
-  display: block;
+.error-message {
+  margin: 0.1rem 0rem;
+  color: var(--main-error-color);
+  text-decoration: underline;
 }
