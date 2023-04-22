@@ -1,4 +1,3 @@
-import React from "react";
 import validate from "./loginFormValidation";
 import { useFormik } from "formik";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,7 +24,6 @@ const LoginForm = ({ submitHandler }: LoginFormProps) => {
       await submitHandler(values);
     },
   });
-  console.log(formik.isValid);
   const { errors, touched } = formik;
   return (
     <div className={style["login-form_wrapper"]}>

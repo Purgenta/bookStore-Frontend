@@ -1,0 +1,27 @@
+.main-nav {
+  align-items: end;
+  justify-content: end;
+  display: flex;
+  padding: 1rem 1rem;
+  background-color: black;
+}
+.account-actions {
+  display: flex;
+  gap: 1rem;
+  color: white;
+  font-size: 0.9rem;
+}
+.top-nav {
+  width: 100%;
+}
+.flex-link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.2rem;
+}
+@media screen and (max-width: 700px) {
+  .flex-link {
+    flex-direction: column;
+  }
+}

@@ -4,19 +4,20 @@ import { Role } from "./redux/authentication/authenticationSlice";
 const ProtectedRoute = lazy(() => {
   return import("./components/ProtectedRoute/ProtectedRoute");
 });
-const Testroute = lazy(() => {
-  return import("./routes/Testroute/Testroute");
-});
 const Register = lazy(() => {
   return import("./routes/Register/Register");
 });
 const Login = lazy(() => {
   return import("./routes/Login/Login");
 });
+const Home = lazy(() => {
+  return import("./routes/Home/Home");
+});
 const Router = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
+        <Route path="/home" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register></Register>}></Route>
         <Route path="/forbidden"></Route>
@@ -27,9 +28,8 @@ const Router = () => {
               role={["USER"] as unknown as Role[]}
             ></ProtectedRoute>
           }
-        >
-          <Route path="/test" element={<Testroute></Testroute>}></Route>
-        </Route>
+        ></Route>
+        <Route path="/" element={<Home />}></Route>
       </Routes>
     </Suspense>
   );

@@ -1,3 +1,6 @@
 :root {
   --main-error-color: #ff0033;
+  --main-text-color: black;
+  --secondary-text-color: white;
+  --main-text-highlight-color: rgb(233, 69, 69);
 }

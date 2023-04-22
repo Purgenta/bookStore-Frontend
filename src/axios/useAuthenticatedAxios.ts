@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { authenticationSelector } from "../redux/authentication/authenticationSlice";
 import { useNavigate } from "react-router-dom";
 import useRefreshToken from "./useRefreshToken";
-const useAuthenticetedAxios = () => {
+const useAuthenticatedAxios = () => {
   const authentication = useSelector(authenticationSelector);
   const refreshToken = useRefreshToken();
   const navigate = useNavigate();
@@ -48,4 +48,4 @@ const useAuthenticetedAxios = () => {
   }, [authentication, refreshToken]);
   return axiosPrivateInstance;
 };
-export default useAuthenticetedAxios;
+export default useAuthenticatedAxios;
