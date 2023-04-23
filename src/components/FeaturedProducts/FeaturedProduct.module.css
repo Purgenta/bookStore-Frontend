@@ -37,6 +37,9 @@
 .add-cart {
   padding: 0.5rem 2rem;
 }
+.add-favourite__product {
+  color: #ccc9c9;
+}
 @media screen and(min-width:800px) {
   .add-cart {
     visibility: hidden;

@@ -1,6 +1,6 @@
 .main-nav {
   align-items: end;
-  justify-content: end;
+  justify-content: space-between;
   display: flex;
   padding: 1rem 1rem;
   background-color: black;
@@ -10,6 +10,9 @@
   gap: 1rem;
   color: white;
   font-size: 0.9rem;
+}
+.page-logo__wrapper {
+  color: white;
 }
 .top-nav {
   width: 100%;
