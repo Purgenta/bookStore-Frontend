@@ -11,10 +11,7 @@ const useRefreshToken = () => {
     const response = await axios.get("/account/refreshToken", {
       withCredentials: true,
     });
-    const {
-      data: { accessToken },
-      data: { role },
-    } = response;
+    const { accessToken, role } = response.data;
     dispatch(updateAccessToken(accessToken, role));
     return { accessToken, role };
   };

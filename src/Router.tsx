@@ -13,6 +13,9 @@ const Login = lazy(() => {
 const Home = lazy(() => {
   return import("./routes/Home/Home");
 });
+const TestRoute = lazy(() => {
+  return import("./routes/TestRoute/TestRoute");
+});
 const Router = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -28,7 +31,9 @@ const Router = () => {
               role={["USER"] as unknown as Role[]}
             ></ProtectedRoute>
           }
-        ></Route>
+        >
+          <Route element={<TestRoute />} path="/test"></Route>
+        </Route>
         <Route path="/" element={<Home />}></Route>
       </Routes>
     </Suspense>

@@ -1,15 +1,18 @@
 import style from "./FeaturedProduct.module.css";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { nanoid } from "@reduxjs/toolkit";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { authenticationSelector } from "../../redux/authentication/authenticationSlice";
 import {
   addFavouriteProduct,
   removeFavouriteProduct,
 } from "../../redux/favourites/favouritesSlice";
+import { addNotification } from "../../redux/notification/notificationSlice";
 import useAuthenticatedAxios from "../../axios/useAuthenticatedAxios";
 import { useSelector } from "react-redux";
 import { AppDispatch } from "../../redux/store";
+import { useNavigate } from "react-router-dom";
 type ProductImage = {
   image_url: string;
 };
@@ -27,6 +30,7 @@ interface FeaturedProductProps {
   isFavourite: boolean;
 }
 const FeaturedProduct = ({ product, isFavourite }: FeaturedProductProps) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const axios = useAuthenticatedAxios();
   const { isAuthenticated } = useSelector(authenticationSelector);
@@ -35,10 +39,78 @@ const FeaturedProduct = ({ product, isFavourite }: FeaturedProductProps) => {
   const isFavouriteProduct = isFavourite
     ? style["favourite-product"]
     : style["add-favourite__product"];
-  const onFavouriteClick = (event: React.SyntheticEvent) => {
-    if (!isAuthenticated) return;
-    if (!isFavourite) dispatch(addFavouriteProduct({ axios, product_id: id }));
-    else dispatch(removeFavouriteProduct({ axios, product_id: id }));
+  const onFavouriteClick = () => {
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
+    if (!isFavourite) {
+      dispatch(addFavouriteProduct({ axios, product_id: id }))
+        .then(() => {
+          dispatch(
+            addNotification({
+              message: "Favourite item added successfully",
+              id: nanoid(5),
+              notificationType: "SUCCESS",
+            })
+          );
+        })
+        .catch(() =>
+          dispatch(
+            addNotification({
+              message: "Error while trying to add a favourite item",
+              id: nanoid(5),
+              notificationType: "ERROR",
+            })
+          )
+        );
+    } else {
+      dispatch(removeFavouriteProduct({ axios, product_id: id }))
+        .then(() => {
+          dispatch(
+            addNotification({
+              message: "Favourite item removed successfully",
+              id: nanoid(5),
+              notificationType: "SUCCESS",
+            })
+          );
+        })
+        .catch(() =>
+          dispatch(
+            addNotification({
+              message: "Error while trying to remove favourite item",
+              id: nanoid(5),
+              notificationType: "ERROR",
+            })
+          )
+        );
+    }
+  };
+  const addToCart = async () => {
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
+    try {
+      await axios.post("cart/addCartItem", {
+        product_id: id,
+        quantity: 1,
+      });
+      dispatch(
+        addNotification({
+          message: "Item added successfully",
+          notificationType: "SUCCESS",
+          id: nanoid(5),
+        })
+      );
+    } catch (error) {
+      console.log(error);
+      addNotification({
+        message: "Issue adding item to the cart",
+        notificationType: "ERROR",
+        id: nanoid(5),
+      });
+    }
   };
   return (
     <div className={style["featured-product"]}>
@@ -66,7 +138,9 @@ const FeaturedProduct = ({ product, isFavourite }: FeaturedProductProps) => {
           {`\u20AC`}
         </p>
       </div>
-      <button className={style["add-cart"]}>Add to cart</button>
+      <button onClick={addToCart} className={style["add-cart"]}>
+        Add to cart
+      </button>
     </div>
   );
 };

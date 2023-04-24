@@ -24,20 +24,20 @@ export function MultiSlider<T>({
       spaceBetween={50}
       breakpoints={{
         0: {
-          slidesPerView: 2,
+          slidesPerView: 3,
           spaceBetween: 10,
         },
         480: {
-          slidesPerView: 5,
+          slidesPerView: 4,
           spaceBetween: 20,
         },
         720: {
-          slidesPerView: 6,
+          slidesPerView: 5,
           spaceBetween: 20,
         },
         1080: {
           spaceBetween: 20,
-          slidesPerView: 5,
+          slidesPerView: 6,
         },
         1280: {
           slidesPerView: 7,
