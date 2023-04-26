@@ -12,9 +12,12 @@ const Notifications = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (!notifications.length) return;
+    const typeOfNotification = notifications[0].notificationType;
+    let duration = 2000;
+    if (typeOfNotification === "ERROR") duration = 3000;
     setTimeout(() => {
       dispatch(removeNotification());
-    }, 1500);
+    }, duration);
   }, [notifications]);
 
   return (

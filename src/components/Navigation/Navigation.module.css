@@ -4,6 +4,9 @@
   display: flex;
   padding: 1rem 1rem;
   background-color: black;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
 }
 .account-actions {
   display: flex;
@@ -22,9 +25,4 @@
   flex-direction: row;
   align-items: center;
   gap: 0.2rem;
-}
-@media screen and (max-width: 700px) {
-  .flex-link {
-    flex-direction: column;
-  }
 }

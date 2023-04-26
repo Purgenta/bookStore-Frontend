@@ -1,0 +1,10 @@
+.highlighted-information {
+  display: flex;
+  gap: 3rem;
+}
+.highlighted-information > li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}

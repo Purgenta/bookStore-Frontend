@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { Product as FavouriteProduct } from "../../components/FeaturedProducts/FeaturedProduct";
+import { Product as FavouriteProduct } from "../../components/FeaturedProduct/FeaturedProduct";
 import { AxiosInstance } from "axios";
 const FAVOURITES_URL = "user/favourites";
 const FAVOURITE_ADD = "user/addFavourite";

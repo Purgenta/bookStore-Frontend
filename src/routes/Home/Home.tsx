@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import style from "./Home.module.css";
 import axios from "../../axios/publicAxiosInstance";
 import { MultiSlider } from "../../components/MultiSlider/MultiSlider";
-import FeaturedProduct from "../../components/FeaturedProducts/FeaturedProduct";
-import { Product } from "../../components/FeaturedProducts/FeaturedProduct";
+import FeaturedProduct from "../../components/FeaturedProduct/FeaturedProduct";
+import { Product } from "../../components/FeaturedProduct/FeaturedProduct";
 import useFavouriteLookup from "../../redux/favourites/favouriteProductLookup";
 interface FeaturedProducts {
   newestProducts: Product[];
@@ -27,37 +27,32 @@ const Home = () => {
   const favourites = useFavouriteLookup();
   return (
     <section className={style["featured-products"]}>
-      <h2 className={style["list-title"]}>Newest:</h2>
-      {featuredProducts.newestProducts.length && (
-        <MultiSlider
-          elements={featuredProducts.newestProducts}
-          id={(product: Product) => product.id}
-          renderElement={(product) => {
-            return (
-              <FeaturedProduct
-                product={product}
-                isFavourite={favourites.has(product.id)}
-              />
-            );
-          }}
-        ></MultiSlider>
-      )}
-      <h2 className={style["list-title"]}>Best rated:</h2>
-      {featuredProducts.bestRated.length && (
-        <MultiSlider
-          swiper={style["product-swiper"]}
-          elements={featuredProducts.bestRated}
-          id={(product: Product) => product.id}
-          renderElement={(product) => {
-            return (
-              <FeaturedProduct
-                product={product}
-                isFavourite={favourites.has(product.id)}
-              />
-            );
-          }}
-        ></MultiSlider>
-      )}
+      <div className={style["featured-group"]}>
+        <h2 className={style["list-title"]}>Newest</h2>
+        {featuredProducts.newestProducts.length && (
+          <MultiSlider
+            className={style["product-swiper"]}
+            elements={featuredProducts.newestProducts}
+            id={(product: Product) => product.id}
+            renderElement={(product) => {
+              return <FeaturedProduct product={product} />;
+            }}
+          ></MultiSlider>
+        )}
+      </div>
+      <div className={style["featured-group"]}>
+        <h2 className={style["list-title"]}>Best rated</h2>
+        {featuredProducts.bestRated.length && (
+          <MultiSlider
+            className={style["product-swiper"]}
+            elements={featuredProducts.bestRated}
+            id={(product: Product) => product.id}
+            renderElement={(product) => {
+              return <FeaturedProduct product={product} />;
+            }}
+          ></MultiSlider>
+        )}
+      </div>
     </section>
   );
 };

@@ -4,3 +4,6 @@
   border-radius: 0.5rem;
   background-color: #f9f6ee;
 }
+.notification > svg {
+  padding-right: 0.2rem;
+}

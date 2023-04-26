@@ -1,7 +1,7 @@
 @import url("../../variables.module.css");
 .book-cover__image {
   aspect-ratio: 2/3;
-  width: 350px;
+  width: 200px;
   object-fit: cover;
 }
 .featured-product {
@@ -10,6 +10,7 @@
   align-items: center;
   gap: 0.2rem;
   text-align: center;
+  height: 100%;
 }
 .add-cart {
   visibility: hidden;
@@ -22,10 +23,8 @@
 .img-wrapper {
   position: relative;
 }
-.price {
-  margin: 1rem 0rem;
-  color: var(--main-text-highlight-color);
-  font-weight: bold;
+.product-info {
+  flex-grow: 1;
 }
 .add-to__favourites {
   top: 2%;
@@ -35,10 +34,32 @@
   position: absolute;
 }
 .add-cart {
-  padding: 0.5rem 2rem;
+  width: 100%;
+  padding: 0.5rem 0rem;
+  max-width: 150px;
 }
 .add-favourite__product {
   color: #ccc9c9;
+}
+.discount {
+  position: absolute;
+  top: 2%;
+  background-color: #ed1c24;
+  color: var(--secondary-text-color);
+  padding: 0.1rem 0.2rem;
+}
+.old-price {
+  text-decoration: line-through;
+  font-size: 0.9rem;
+}
+.new-price {
+  color: var(--main-text-highlight-color);
+  font-weight: bold;
+}
+.price-information {
+  margin: 1rem 0rem;
+  display: flex;
+  flex-direction: column;
 }
 @media screen and(min-width:800px) {
   .add-cart {

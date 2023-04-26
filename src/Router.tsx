@@ -13,8 +13,8 @@ const Login = lazy(() => {
 const Home = lazy(() => {
   return import("./routes/Home/Home");
 });
-const TestRoute = lazy(() => {
-  return import("./routes/TestRoute/TestRoute");
+const Product = lazy(() => {
+  return import("./routes/Product/Product");
 });
 const Router = () => {
   return (
@@ -32,8 +32,11 @@ const Router = () => {
             ></ProtectedRoute>
           }
         >
-          <Route element={<TestRoute />} path="/test"></Route>
+          <Route path="/profile"></Route>
+          <Route path="/cart"></Route>
+          <Route path="/order/:id"></Route>
         </Route>
+        <Route path="/product/:id" element={<Product />}></Route>
         <Route path="/" element={<Home />}></Route>
       </Routes>
     </Suspense>
