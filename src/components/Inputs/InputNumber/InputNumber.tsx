@@ -2,6 +2,8 @@ import React, { InputHTMLAttributes, useEffect } from "react";
 import style from "./InputNumber.module.css";
 import { useState } from "react";
 interface InputNumberProps extends InputHTMLAttributes<HTMLInputElement> {
+  min: number;
+  max: number;
   getChange: (input: number) => unknown;
 }
 const InputNumber = ({ min, max, getChange }: InputNumberProps) => {
@@ -14,16 +16,37 @@ const InputNumber = ({ min, max, getChange }: InputNumberProps) => {
       <button
         onClick={() =>
           setValue((value) => {
-            if ((value - 1 >= min) as number) return value - 1;
-            else return value;
+            if (value - 1 >= min) return value - 1;
+            return value;
           })
         }
         className={style["action"]}
       >
         -
       </button>
-      <input type="number" min={min} max={max}></input>
-      <button className={style["action"]}>-</button>
+      <input
+        className={style["number-input"]}
+        type="number"
+        min={min}
+        max={max}
+        value={value}
+        onChange={(event) => {
+          const newValue = +event.target.value;
+          if (newValue < min) setValue(min);
+          else if (newValue > max) setValue(max);
+        }}
+      ></input>
+      <button
+        onClick={() =>
+          setValue((value) => {
+            if (value + 1 <= max) return value + 1;
+            return value;
+          })
+        }
+        className={style["action"]}
+      >
+        +
+      </button>
     </div>
   );
 };

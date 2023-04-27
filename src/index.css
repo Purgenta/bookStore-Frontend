@@ -27,6 +27,7 @@ body {
   flex-direction: column;
   min-height: 100vh;
   font-family: "Nunito Sans", sans-serif;
+  color: #272727;
 }
 .flex-container {
   display: flex;

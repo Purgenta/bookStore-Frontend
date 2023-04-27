@@ -1,0 +1,19 @@
+.user-information {
+  display: flex;
+}
+.comment {
+  margin-top: 1rem;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.filled-rating {
+  color: rgb(177, 151, 7);
+}
+.empty-rating {
+  color: transparent;
+  fill: none;
+  stroke-width: 10px;
+  stroke: black;
+}

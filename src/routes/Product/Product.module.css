@@ -1,7 +1,9 @@
+@import url("../../variables.module.css");
 section.product-info {
   display: flex;
   gap: 2rem;
   justify-content: center;
+  flex-wrap: wrap;
 }
 .product {
   display: flex;
@@ -34,6 +36,9 @@ section.product-info {
   line-height: 1.2;
   transition: height 1s ease-in;
 }
+.description::first-letter {
+  font-size: 2rem;
+}
 .swiper {
   max-width: 300px;
 }
@@ -51,9 +56,34 @@ section.product-info {
   border-top: 1px solid rgb(196, 192, 192);
   padding-top: 0.5rem;
   margin-top: 1rem;
+  text-align: center;
 }
 .quantity {
   padding: 0.3rem 0.1rem;
   font-size: 1.2rem;
   width: 2rem;
+}
+.add-item {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: center;
+}
+.add-to__cart {
+  padding: 0.5rem 2rem;
+  background-color: rgb(131, 158, 91);
+  color: white;
+  border: none;
+}
+.new-price {
+  color: var(--main-text-highlight-color);
+}
+.old-price {
+  text-decoration: line-through;
+}
+.pricing {
+  margin: 1.5rem 0rem;
+}
+.reviews {
+  width: 100%;
 }

@@ -7,9 +7,16 @@ import { MultiSlider } from "../../components/MultiSlider/MultiSlider";
 import style from "./Product.module.css";
 import ReadMore from "../../components/ReadMore/ReadMore";
 import HighlightedFeatures from "../../components/HighlightedFeatures/HighlightedFeatures";
+import InputNumber from "../../components/Inputs/InputNumber/InputNumber";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import useUpdateCartQuantity from "../../hooks/useUpdateCartQuantity";
+import Reviews from "../../components/Reviews/Reviews";
 export const Product = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<DetailedProduct | null>(null);
+  const updateQuantity = useUpdateCartQuantity(Number(id));
+  const [quantity, setQuantity] = useState(0);
   useEffect(() => {
     const getProduct = async () => {
       try {
@@ -23,6 +30,13 @@ export const Product = () => {
     };
     getProduct();
   }, []);
+  let newPrice: number | null = null;
+  if (product) {
+    product.sale
+      ? (newPrice =
+          product.price - (product.price * product.sale.discount) / 100)
+      : (newPrice = null);
+  }
   return (
     product && (
       <div className={style["product"]}>
@@ -62,7 +76,7 @@ export const Product = () => {
               })}
             </ul>
             <h3 className={style["author"]}>
-              {`${product.author.name} ${product.author.last_name}`}
+              {`By ${product.author.name} ${product.author.last_name}`}
             </h3>
             {
               <ReadMore
@@ -71,11 +85,39 @@ export const Product = () => {
               />
             }
             <div className={style["purchase"]}>
-              <h4 className={style["product-price"]}>
-                {product.price} {`\u20AC`}
-              </h4>
-              <div className="add-item">
-                <input type="number" className={style["quantity"]} />
+              <div className={style["pricing"]}>
+                {newPrice && (
+                  <h4 className={style["new-price"]}>
+                    New price:
+                    {newPrice.toFixed(2)}
+                    {`\u20AC`}
+                  </h4>
+                )}
+                <h4
+                  className={`${style["product-price"]} ${
+                    newPrice ? style["old-price"] : ""
+                  }`}
+                >
+                  {`${
+                    newPrice ? "Old price:" : "Price:"
+                  } ${product.price.toFixed(2)}`}
+                  {`\u20AC`}
+                </h4>
+              </div>
+              <div className={style["add-item"]}>
+                <InputNumber
+                  min={1}
+                  max={product.quantity}
+                  getChange={(input) => setQuantity(input)}
+                ></InputNumber>
+                <button
+                  onClick={async () => {
+                    await updateQuantity(quantity);
+                  }}
+                  className={style["add-to__cart"]}
+                >
+                  Add to cart <FontAwesomeIcon icon={faShoppingCart} />
+                </button>
               </div>
             </div>
           </div>
@@ -85,6 +127,10 @@ export const Product = () => {
           publishing_date={new Date(product.publishing_date)}
           publisher={product.publisher.name}
         ></HighlightedFeatures>
+        <section className={style["reviews"]}>
+          <h2>Reviews:</h2>
+          <Reviews product_id={product.id}></Reviews>
+        </section>
       </div>
     )
   );

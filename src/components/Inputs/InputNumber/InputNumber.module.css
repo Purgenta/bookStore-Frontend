@@ -1,0 +1,16 @@
+.action {
+  background-color: transparent;
+  border: 1px solid black;
+  height: 1.9rem;
+  width: 1.7rem;
+}
+.number-input {
+  height: 1.9rem;
+  width: 2.4rem;
+  padding: 0.1rem;
+}
+.input-wrapper {
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+}

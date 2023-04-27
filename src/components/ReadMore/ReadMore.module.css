@@ -2,7 +2,7 @@
   margin-top: 0.5rem;
   background-color: transparent;
   border: none;
-  display: block;
+  display: inline;
   font-weight: bold;
   text-decoration: underline;
 }

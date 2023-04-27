@@ -1,13 +1,8 @@
 import style from "./FeaturedProduct.module.css";
-import { isAxiosError } from "axios";
-import { useDispatch } from "react-redux";
-import { nanoid } from "@reduxjs/toolkit";
 import { authenticationSelector } from "../../redux/authentication/authenticationSlice";
 import Favourite from "../Favourite/Favourite";
-import { addNotification } from "../../redux/notification/notificationSlice";
-import useAuthenticatedAxios from "../../axios/useAuthenticatedAxios";
+import useUpdateCartQuantity from "../../hooks/useUpdateCartQuantity";
 import { useSelector } from "react-redux";
-import { AppDispatch } from "../../redux/store";
 import { Link } from "react-router-dom";
 import useLoginWarning from "../../hooks/useLoginWarning";
 import { useNavigate } from "react-router-dom";
@@ -33,9 +28,8 @@ interface FeaturedProductProps {
 }
 const FeaturedProduct = ({ product }: FeaturedProductProps) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
   const loginWarning = useLoginWarning();
-  const axios = useAuthenticatedAxios();
+  const updateQuantity = useUpdateCartQuantity(product.id);
   const { isAuthenticated } = useSelector(authenticationSelector);
   const imageURL = product.productImages[0]?.image_url;
   const { price, title, id, sale } = product;
@@ -44,35 +38,11 @@ const FeaturedProduct = ({ product }: FeaturedProductProps) => {
     : undefined;
   const addToCart = async () => {
     if (!isAuthenticated) {
-      dispatch(loginWarning);
+      loginWarning();
       navigate("/login");
       return;
     }
-    try {
-      await axios.post("cart/addCartItem", {
-        product_id: id,
-        quantity: 1,
-      });
-      dispatch(
-        addNotification({
-          message: "Item added successfully",
-          notificationType: "SUCCESS",
-          id: nanoid(5),
-        })
-      );
-    } catch (error: any) {
-      let message = "Issue adding item to the cart";
-      if (isAxiosError(error)) {
-        message = error.response?.data || message;
-      }
-      dispatch(
-        addNotification({
-          message,
-          notificationType: "ERROR",
-          id: nanoid(5),
-        })
-      );
-    }
+    await updateQuantity(1);
   };
   return (
     <div className={style["featured-product"]}>
