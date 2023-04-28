@@ -3,19 +3,21 @@ import style from "./Reviews.module.css";
 import axios from "../../axios/publicAxiosInstance";
 import { Review as UserReview } from "./Review/Review";
 import Review from "./Review/Review";
+import ReviewForm from "../ReviewForm/ReviewForm";
 type ReviewsProps = {
   product_id: number;
   className?: string;
+  canReview: boolean;
 };
 type ReviewResponse = {
   reviews: UserReview[];
   hasNextPage: boolean;
+  canReview: boolean;
 };
-const Reviews = ({ product_id, className }: ReviewsProps) => {
+const Reviews = ({ product_id, canReview, className }: ReviewsProps) => {
   const [reviews, setReviews] = useState<UserReview[]>([]);
   const [page, setPage] = useState(0);
   const [nextPage, setNextPage] = useState(false);
-  console.log(reviews);
   useEffect(() => {
     const getReviews = async () => {
       try {
@@ -46,7 +48,18 @@ const Reviews = ({ product_id, className }: ReviewsProps) => {
       </li>
     );
   });
-  return <ul className={className || style["reviews"]}>{productReviews}</ul>;
+  return (
+    <div className={style["reviews-wrapper"]}>
+      {canReview && (
+        <div className={style["form-wrapper"]}>
+          <h3>Leave a review:</h3>
+          <ReviewForm onSubmit={(values) => console.log(values)} />
+        </div>
+      )}
+      <ul className={className || style["reviews"]}>{productReviews}</ul>
+      {nextPage && <button>Load More</button>}
+    </div>
+  );
 };
 
 export default Reviews;

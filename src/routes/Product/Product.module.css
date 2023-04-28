@@ -87,3 +87,7 @@ section.product-info {
 .reviews {
   width: 100%;
 }
+.swiper-slider {
+  display: flex;
+  justify-content: center;
+}

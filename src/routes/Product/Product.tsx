@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { DetailedProduct } from "./productType";
-import axios from "../../axios/publicAxiosInstance";
 import { isAxiosError } from "axios";
 import { useParams } from "react-router-dom";
 import { MultiSlider } from "../../components/MultiSlider/MultiSlider";
@@ -12,17 +11,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import useUpdateCartQuantity from "../../hooks/useUpdateCartQuantity";
 import Reviews from "../../components/Reviews/Reviews";
+import useAuthenticatedAxios from "../../axios/useAuthenticatedAxios";
+type Response = {
+  product: DetailedProduct;
+  canReview: boolean;
+};
 export const Product = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<DetailedProduct | null>(null);
+  const [canReview, setCanReview] = useState(false);
+  const axios = useAuthenticatedAxios();
   const updateQuantity = useUpdateCartQuantity(Number(id));
   const [quantity, setQuantity] = useState(0);
   useEffect(() => {
     const getProduct = async () => {
       try {
-        const productById = (await axios.get(`product/${id}`))
-          .data as DetailedProduct;
-        setProduct(productById);
+        const productById = (await axios.get(`product/${id}`)).data as Response;
+        setProduct(productById.product);
+        setCanReview(productById.canReview);
       } catch (error) {
         if (isAxiosError(error)) {
         }
@@ -45,6 +51,7 @@ export const Product = () => {
             <MultiSlider
               elements={product.productImages}
               className={style["swiper"]}
+              slider={{ className: style["swiper-slider"] }}
               id={(image) => image.id}
               options={{
                 breakpoints: {
@@ -129,7 +136,7 @@ export const Product = () => {
         ></HighlightedFeatures>
         <section className={style["reviews"]}>
           <h2>Reviews:</h2>
-          <Reviews product_id={product.id}></Reviews>
+          <Reviews canReview={canReview} product_id={product.id}></Reviews>
         </section>
       </div>
     )

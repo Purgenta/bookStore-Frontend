@@ -8,6 +8,9 @@ interface SwiperProps<T> {
   renderElement: (element: T) => JSX.Element;
   id: (element: T) => number;
   options?: SwiperOptions;
+  slider?: {
+    className: string;
+  };
   className?: string;
 }
 export function MultiSlider<T>({
@@ -16,10 +19,14 @@ export function MultiSlider<T>({
   className,
   options,
   id,
+  slider,
 }: SwiperProps<T>) {
   const slides = elements.map((element) => {
     return (
-      <SwiperSlide className={style["swiper-slider"]} key={id(element)}>
+      <SwiperSlide
+        className={`${style["swiper-slider"]} ${slider?.className}`}
+        key={id(element)}
+      >
         {renderElement(element)}
       </SwiperSlide>
     );

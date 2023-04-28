@@ -1,0 +1,9 @@
+.filled {
+  color: rgb(177, 151, 7);
+}
+.empty {
+  color: transparent;
+  fill: none;
+  stroke-width: 10px;
+  stroke: black;
+}
