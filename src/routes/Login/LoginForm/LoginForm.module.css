@@ -1,12 +1,27 @@
 @import url("../../../variables.module.css");
 .authentication-form {
+  color: var(--secondary-text-color);
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   gap: 1rem;
-  width: 90%;
+  background: linear-gradient(
+    131deg,
+    rgba(105, 88, 204, 1) 45%,
+    rgba(173, 0, 203, 1) 81%
+  );
+  box-shadow: 2px 2px 2px rgba(255, 255, 255, 0.3);
+  padding: 3rem 2rem;
+  border-radius: 0.8rem;
+}
+.login-form_wrapper,
+.register-form__wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
   max-width: 500px;
-  min-width: 350px;
+  min-width: 340px;
 }
 .submit-btn {
   padding: 0.4rem 1rem;
@@ -26,6 +41,11 @@
 .auth-input {
   border: none;
   font-size: 1rem;
+  background-color: transparent;
+}
+.auth-input::placeholder {
+  color: var(--secondary-text-color);
+  font-weight: 100;
 }
 .auth-input:focus {
   outline: none;
@@ -43,7 +63,7 @@
 .error-message {
   margin: 0.2rem 0rem;
   width: 100%;
-  color: var(--main-error-color);
+  font-weight: bold;
   max-width: 250px;
   text-align: center;
   text-decoration: underline;

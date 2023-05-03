@@ -1,0 +1,21 @@
+.form-wrapper,
+.reviews-wrapper,
+.reviews {
+  display: flex;
+  display: flex;
+}
+.reviews-wrapper {
+  margin: 1rem 0rem;
+}
+.reviews-wrapper,
+.form-wrapper {
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+.reviews {
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem;
+}

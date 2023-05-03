@@ -1,20 +1,26 @@
 import style from "../../Login/LoginForm/LoginForm.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faKey, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUser,
+  faKey,
+  faEnvelope,
+  faPhone,
+} from "@fortawesome/free-solid-svg-icons";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 import validate from "./registerFormValidation";
-type RegisterFormProps = {
-  submitHandler: (email: string, password: string) => unknown;
-  emailError?: string;
-  passwordError?: string;
-};
 export interface FormValues {
   email: string;
   password: string;
   name: string;
-  lastName: string;
+  last_name: string;
+  phone_number: string;
 }
+type RegisterFormProps = {
+  submitHandler: (formValues: FormValues) => unknown;
+  emailError?: string;
+  passwordError?: string;
+};
 const RegisterForm = ({
   submitHandler,
   emailError,
@@ -23,15 +29,16 @@ const RegisterForm = ({
   const formik = useFormik({
     initialValues: {
       name: "",
-      lastName: "",
+      last_name: "",
       email: "",
       password: "",
+      phone_number: "",
     },
     enableReinitialize: true,
     validateOnMount: true,
     validate,
     onSubmit: (values) => {
-      submitHandler(values.email, values.password);
+      submitHandler(values);
     },
   });
   const { touched, errors, isSubmitting } = formik;
@@ -41,8 +48,8 @@ const RegisterForm = ({
         className={style["authentication-form"]}
         onSubmit={formik.handleSubmit}
       >
-        <label className={style["auth-label"]} id="email">
-          Email
+        <label className={style["auth-label"]} htmlFor={"name"}>
+          Name
         </label>
         <div className={style["input-wrapper"]}>
           <FontAwesomeIcon icon={faUser} />
@@ -65,15 +72,30 @@ const RegisterForm = ({
           <FontAwesomeIcon icon={faUser} />
           <input
             className={style["auth-input"]}
-            name="lastName"
+            name="last_name"
             type="text"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             placeholder="Enter your last name"
           />
         </div>
-        {errors.lastName && touched.lastName && (
-          <p className={style["error-message"]}>{errors.lastName}</p>
+        {errors["last_name"] && touched["last_name"] && (
+          <p className={style["error-message"]}>{errors["last_name"]}</p>
+        )}
+        <label className={style["auth-label"]}>Phone number</label>
+        <div className={style["input-wrapper"]}>
+          <FontAwesomeIcon icon={faPhone} />
+          <input
+            className={style["auth-input"]}
+            name="phone_number"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            placeholder="Enter your phone number"
+          />
+        </div>
+        {errors.phone_number && touched.phone_number && (
+          <p className={style["error-message"]}>{errors["phone_number"]}</p>
         )}
         <label className={style["auth-label"]} id="email">
           Email

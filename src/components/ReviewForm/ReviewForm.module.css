@@ -1,0 +1,15 @@
+@import url("../../variables.module.css");
+.comment {
+  font-size: 1.2rem;
+  margin: 0.5rem 0rem;
+  resize: none;
+}
+.wrapper {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.form-submit__btn {
+  background-color: var(--main-button-background-color);
+  padding: 0.4rem 0.8rem;
+}

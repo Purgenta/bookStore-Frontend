@@ -11,17 +11,46 @@ ul {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  padding: 3rem 1rem;
   padding-top: 4rem;
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0rem auto;
+}
+img {
+  max-width: 100%;
+}
+button {
+  color: white;
+  border: none;
+}
+button:disabled {
+  opacity: 0.6;
 }
 body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  overflow-x: hidden;
   min-height: 100vh;
   font-family: "Nunito Sans", sans-serif;
+  color: #272727;
+  background-color: rgb(252, 252, 252);
 }
 .flex-container {
   display: flex;
   flex-direction: column;
+}
+textarea {
+  max-width: 95%;
+  box-sizing: border-box;
+  padding: 0.2rem;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }

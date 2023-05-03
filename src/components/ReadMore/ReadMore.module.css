@@ -1,0 +1,18 @@
+.expand-description {
+  margin-top: 0.5rem;
+  background-color: transparent;
+  border: none;
+  display: inline;
+  font-weight: bold;
+  text-decoration: underline;
+}
+.read-less,
+.read-more {
+  margin: 0rem 0.2rem;
+}
+.read-less {
+  transform: rotate(-90deg);
+}
+.read-more {
+  transform: rotate(90deg);
+}

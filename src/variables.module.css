@@ -1,3 +1,9 @@
 :root {
   --main-error-color: #ff0033;
+  --main-text-color: #272727;
+  --secondary-text-color: white;
+  --main-text-highlight-color: rgb(233, 69, 69);
+  --secondary-button-color: rgb(233, 69, 69);
+  --main-button-background-color: rgb(131, 158, 91);
+  --secondary-highlight-color: rgb(196, 192, 192);
 }

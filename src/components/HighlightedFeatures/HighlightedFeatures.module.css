@@ -1,0 +1,18 @@
+.highlighted-information {
+  display: flex;
+  gap: 3rem;
+  margin: 1.5rem 0rem;
+  border-top: 1px solid #272727;
+  border-bottom: 1px solid #272727;
+  padding: 0.5rem 0rem;
+  text-align: center;
+}
+.highlighted-information > li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+.highlight-icon {
+  color: #bebebe;
+}

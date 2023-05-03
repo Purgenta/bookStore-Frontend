@@ -1,0 +1,13 @@
+.rating-wrapper {
+  display: flex;
+  gap: 0.1rem;
+}
+.filled-rating {
+  color: rgb(177, 151, 7);
+}
+.empty-rating {
+  color: transparent;
+  fill: none;
+  stroke-width: 10px;
+  stroke: black;
+}

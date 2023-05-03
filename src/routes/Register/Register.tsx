@@ -12,20 +12,16 @@ type RegisterError = {
     password?: ErrorResponse | null;
   };
 };
+import { FormValues } from "./RegisterForm/RegisterForm";
 const Register = () => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState<RegisterError>({
     errors: { email: null },
   });
-  const submitHandler = (email: string, password: string) => {
+  const submitHandler = (formValues: FormValues) => {
     const submitLoginData = async () => {
       try {
-        await axios.post(`account/register`, {
-          password,
-          email,
-          name: "Nikola",
-          lastName: `Todorovic`,
-        });
+        await axios.post(`account/register`, formValues);
         navigate("/login");
       } catch (error) {
         if (axiosCore.isAxiosError(error)) {

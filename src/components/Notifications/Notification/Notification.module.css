@@ -1,0 +1,9 @@
+.notification {
+  border: 1px solid black;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background-color: #f9f6ee;
+}
+.notification > svg {
+  padding-right: 0.2rem;
+}
