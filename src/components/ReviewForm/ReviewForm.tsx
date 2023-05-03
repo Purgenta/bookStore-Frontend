@@ -1,8 +1,7 @@
-import React from "react";
 import { useFormik } from "formik";
 import style from "./ReviewForm.module.css";
 import validate from "./reviewFormValidation";
-import Rating from "./Rating/Rating";
+import Rating from "../Rating/Rating";
 export type ReviewFormValues = {
   rating: number;
   comment: string;
@@ -14,7 +13,7 @@ const ReviewForm = ({ onSubmit }: ReviewFormProps) => {
   const formik = useFormik({
     initialValues: {
       comment: "",
-      rating: 1,
+      rating: 0,
     },
     enableReinitialize: true,
     validate,
@@ -31,10 +30,28 @@ const ReviewForm = ({ onSubmit }: ReviewFormProps) => {
         onBlur={formik.handleBlur}
         name="comment"
         id="comment"
-        cols={35}
+        placeholder="Your review..."
+        cols={45}
         rows={10}
+        minLength={15}
+        maxLength={350}
       ></textarea>
-      <Rating onChange={(num) => console.log(num)} />
+      <div className={style["wrapper"]}>
+        <Rating
+          onChange={(rating) =>
+            formik.setValues((prev) => {
+              return { ...prev, rating };
+            })
+          }
+        />
+        <button
+          type="submit"
+          disabled={!formik.isValid || formik.isSubmitting}
+          className={style["form-submit__btn"]}
+        >
+          Submit
+        </button>
+      </div>
     </form>
   );
 };

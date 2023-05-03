@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useAuthenticatedAxios from "../../axios/useAuthenticatedAxios";
 import { AppDispatch } from "../../redux/store";
 import useFavouriteLookup from "../../redux/favourites/favouriteProductLookup";
+import useLoginWarning from "../../hooks/useLoginWarning";
 type FavouritesProps = {
   product_id: number;
   className: string;
@@ -25,9 +26,11 @@ const Favourite = ({ product_id, className }: FavouritesProps) => {
   const { isAuthenticated } = useSelector(authenticationSelector);
   const favourites = useFavouriteLookup();
   const isFavourite = favourites.has(product_id);
+  const loginWarning = useLoginWarning();
   const onFavouriteClick = (event: SyntheticEvent) => {
     event.preventDefault();
     if (!isAuthenticated) {
+      loginWarning();
       navigate("/login");
       return;
     }
@@ -76,7 +79,11 @@ const Favourite = ({ product_id, className }: FavouritesProps) => {
   return (
     <button className={className} onClick={onFavouriteClick}>
       <FontAwesomeIcon
-        className={isFavourite ? style[""] : style["add-favourite__product"]}
+        className={
+          isFavourite
+            ? style["remove-favourite__product"]
+            : style["add-favourite__product"]
+        }
         size="2x"
         icon={faHeart}
       />

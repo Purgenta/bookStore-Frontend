@@ -25,27 +25,29 @@ const Navigation = () => {
   }, [isAuthenticated]);
   return (
     <nav className={style["main-nav"]}>
-      <div className={style["page-logo__wrapper"]}>
-        <NavLink to={"/home"}>
-          <FontAwesomeIcon icon={faBook} />
-        </NavLink>
+      <div className={style["top-nav"]}>
+        <div className={style["page-logo__wrapper"]}>
+          <NavLink to={"/home"}>
+            <FontAwesomeIcon size="xl" icon={faBook} />
+          </NavLink>
+        </div>
+        <ul className={style["account-actions"]}>
+          <NavLink
+            className={style["flex-link"]}
+            to={isAuthenticated ? "/logout" : "/login"}
+          >
+            <FontAwesomeIcon size="xl" icon={faUser}></FontAwesomeIcon>
+            {isAuthenticated ? "Logout" : "Login"}
+          </NavLink>
+          <NavLink className={style["flex-link"]} to={"/favourites"}>
+            <FontAwesomeIcon size="xl" icon={faHeart}></FontAwesomeIcon>
+            <span className="favourite-count">{count}</span>
+          </NavLink>
+          <NavLink className={style["flex-link"]} to={"/cart"}>
+            <FontAwesomeIcon size="xl" icon={faCartShopping}></FontAwesomeIcon>
+          </NavLink>
+        </ul>
       </div>
-      <ul className={style["account-actions"]}>
-        <NavLink
-          className={style["flex-link"]}
-          to={isAuthenticated ? "/logout" : "/login"}
-        >
-          <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
-          {isAuthenticated ? "Logout" : "Login"}
-        </NavLink>
-        <NavLink className={style["flex-link"]} to={"/favourites"}>
-          <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
-          <span className="favourite-count">{count}</span>
-        </NavLink>
-        <NavLink className={style["flex-link"]} to={"/cart"}>
-          <FontAwesomeIcon icon={faCartShopping}></FontAwesomeIcon>
-        </NavLink>
-      </ul>
     </nav>
   );
 };

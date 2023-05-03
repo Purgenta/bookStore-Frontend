@@ -24,7 +24,6 @@ const Home = () => {
     };
     getFeaturedProducts();
   }, []);
-  const favourites = useFavouriteLookup();
   return (
     <section className={style["featured-products"]}>
       <div className={style["featured-group"]}>
@@ -35,7 +34,7 @@ const Home = () => {
             elements={featuredProducts.newestProducts}
             id={(product: Product) => product.id}
             renderElement={(product) => {
-              return <FeaturedProduct product={product} />;
+              return <FeaturedProduct addCart favourite product={product} />;
             }}
           ></MultiSlider>
         )}
@@ -48,7 +47,7 @@ const Home = () => {
             elements={featuredProducts.bestRated}
             id={(product: Product) => product.id}
             renderElement={(product) => {
-              return <FeaturedProduct product={product} />;
+              return <FeaturedProduct addCart favourite product={product} />;
             }}
           ></MultiSlider>
         )}

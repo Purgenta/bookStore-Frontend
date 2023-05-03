@@ -12,6 +12,7 @@ import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import useUpdateCartQuantity from "../../hooks/useUpdateCartQuantity";
 import Reviews from "../../components/Reviews/Reviews";
 import useAuthenticatedAxios from "../../axios/useAuthenticatedAxios";
+import FeaturedProduct from "../../components/FeaturedProduct/FeaturedProduct";
 type Response = {
   product: DetailedProduct;
   canReview: boolean;
@@ -35,7 +36,7 @@ export const Product = () => {
       }
     };
     getProduct();
-  }, []);
+  }, [id]);
   let newPrice: number | null = null;
   if (product) {
     product.sale
@@ -66,22 +67,23 @@ export const Product = () => {
                   <img
                     className={style["product-image"]}
                     src={image.image_url}
+                    alt={`${product.title} cover image`}
                   ></img>
                 );
               }}
             ></MultiSlider>
-          </div>
-          <div className={style["information"]}>
-            <h2 className={style["title"]}>{product.title}</h2>
             <ul className={style["product-genres"]}>
               {product.genre.map((genre) => {
                 return (
-                  <li key={genre.id} className={style["genre"]}>
-                    {genre.name}
+                  <li key={genre.genre.id} className={style["genre"]}>
+                    {genre.genre.name}
                   </li>
                 );
               })}
             </ul>
+          </div>
+          <div className={style["information"]}>
+            <h2 className={style["title"]}>{product.title}</h2>
             <h3 className={style["author"]}>
               {`By ${product.author.name} ${product.author.last_name}`}
             </h3>
@@ -134,10 +136,28 @@ export const Product = () => {
           publishing_date={new Date(product.publishing_date)}
           publisher={product.publisher.name}
         ></HighlightedFeatures>
-        <section className={style["reviews"]}>
-          <h2>Reviews:</h2>
-          <Reviews canReview={canReview} product_id={product.id}></Reviews>
-        </section>
+        <div className={style["reviews-similiar__products"]}>
+          <section className={style["reviews"]}>
+            <h2>Reviews:</h2>
+            <Reviews canReview={canReview} product_id={product.id}></Reviews>
+          </section>
+          <div className={style["similiar-products__wrapper"]}>
+            <h3>Similiar products</h3>
+            <ul className={style["similiar-products"]}>
+              {product.similiarProducts.map((product) => {
+                return (
+                  <li key={product.id}>
+                    <FeaturedProduct
+                      discount
+                      className={style["similiar-product"]}
+                      product={product}
+                    />
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
       </div>
     )
   );

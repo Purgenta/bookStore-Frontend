@@ -9,6 +9,7 @@ const validate = (formValues: ReviewFormValues) => {
       "Your comment needs to be between 15 and 350 characters long";
   if (formValues.rating < 1 || formValues.rating > 5)
     errors.rating = "Rating needs to be between 1 and 5";
+  if (!errors.comment && !errors.rating) return undefined;
   return errors;
 };
 export default validate;

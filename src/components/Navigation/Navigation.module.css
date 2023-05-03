@@ -8,6 +8,10 @@
   width: 100%;
   z-index: 100;
 }
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+}
 .account-actions {
   display: flex;
   gap: 1rem;

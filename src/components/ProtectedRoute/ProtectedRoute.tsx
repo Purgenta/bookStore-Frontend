@@ -15,7 +15,7 @@ const ProtectedRoute = ({ isAuthenticated, role }: ProtectedRouteProps) => {
   const loginWarning = useLoginWarning();
   const dispatch = useDispatch();
   if (isAuthenticated && !authentication.isAuthenticated) {
-    dispatch(loginWarning);
+    loginWarning();
     return (
       <Navigate to={"/login"} state={{ from: location }} replace></Navigate>
     );

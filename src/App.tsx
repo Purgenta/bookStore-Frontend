@@ -5,6 +5,8 @@ import { createPortal } from "react-dom";
 const header = document.querySelector("#main-header") as HTMLElement;
 import Notifications from "./components/Notifications/Notifications";
 import Navigation from "./components/Navigation/Navigation";
+import { useEffect } from "react";
+import useRefreshToken from "./axios/useRefreshToken";
 const App = () => {
   return (
     <Provider store={store}>

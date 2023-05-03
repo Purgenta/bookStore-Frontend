@@ -1,15 +1,23 @@
-import { Discount } from "../../components/FeaturedProduct/FeaturedProduct";
-import { ProductImage } from "../../components/FeaturedProduct/FeaturedProduct";
+import { Product } from "../../components/FeaturedProduct/FeaturedProduct";
 type Publisher = {
   name: string;
+};
+export type ProductImage = {
+  id: number;
+  image_url: string;
+};
+export type Discount = {
+  discount: number;
 };
 type Review = {
   comment: string;
   rating: number;
 };
 type Genre = {
-  name: string;
-  id: number;
+  genre: {
+    id: string;
+    name: string;
+  };
 };
 type Author = {
   name: string;
@@ -23,6 +31,7 @@ export type DetailedProduct = {
   author: Author;
   productImages: ProductImage[];
   publishing_date: string;
+  similiarProducts: Product[];
   quantity: number;
   title: string;
   sale?: Discount;

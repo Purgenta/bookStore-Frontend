@@ -6,13 +6,8 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import useLoginWarning from "../../hooks/useLoginWarning";
 import { useNavigate } from "react-router-dom";
-export type ProductImage = {
-  id: number;
-  image_url: string;
-};
-export type Discount = {
-  discount: number;
-};
+import { ProductImage } from "../../routes/Product/productType";
+import { Discount } from "../../routes/Product/productType";
 export type Product = {
   id: number;
   page_number: number;
@@ -25,8 +20,18 @@ export type Product = {
 };
 interface FeaturedProductProps {
   product: Product;
+  className?: string;
+  addCart?: boolean;
+  discount?: boolean;
+  favourite?: boolean;
 }
-const FeaturedProduct = ({ product }: FeaturedProductProps) => {
+const FeaturedProduct = ({
+  product,
+  addCart,
+  discount,
+  className,
+  favourite,
+}: FeaturedProductProps) => {
   const navigate = useNavigate();
   const loginWarning = useLoginWarning();
   const updateQuantity = useUpdateCartQuantity(product.id);
@@ -45,7 +50,7 @@ const FeaturedProduct = ({ product }: FeaturedProductProps) => {
     await updateQuantity(1);
   };
   return (
-    <div className={style["featured-product"]}>
+    <div className={className || style["featured-product"]}>
       <Link to={`/product/${id}`} className={style["img-wrapper"]}>
         {sale?.discount && (
           <span className={style["discount"]}>-{sale.discount}%</span>
@@ -55,10 +60,12 @@ const FeaturedProduct = ({ product }: FeaturedProductProps) => {
           src={imageURL}
           alt={`${title} cover`}
         />
-        <Favourite
-          product_id={id}
-          className={style["add-to__favourites"]}
-        ></Favourite>
+        {favourite && (
+          <Favourite
+            product_id={id}
+            className={style["add-to__favourites"]}
+          ></Favourite>
+        )}
       </Link>
       <div className={style["product-info"]}>
         <p className={style["title"]}>{title}</p>
@@ -75,9 +82,11 @@ const FeaturedProduct = ({ product }: FeaturedProductProps) => {
           </p>
         </div>
       </div>
-      <button onClick={addToCart} className={style["add-cart"]}>
-        Add to cart
-      </button>
+      {addCart && (
+        <button onClick={addToCart} className={style["add-cart"]}>
+          Add to cart
+        </button>
+      )}
     </div>
   );
 };

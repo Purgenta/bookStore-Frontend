@@ -1,4 +1,6 @@
 import { lazy, Suspense } from "react";
+import { useEffect } from "react";
+import useRefreshToken from "./axios/useRefreshToken";
 import { Route, Routes } from "react-router-dom";
 import { Role } from "./redux/authentication/authenticationSlice";
 const ProtectedRoute = lazy(() => {
@@ -16,7 +18,19 @@ const Home = lazy(() => {
 const Product = lazy(() => {
   return import("./routes/Product/Product");
 });
+const Cart = lazy(() => {
+  return import("./routes/Cart/Cart");
+});
 const Router = () => {
+  const refresh = useRefreshToken();
+  useEffect(() => {
+    const attemptLogin = async () => {
+      try {
+        await refresh();
+      } catch (error) {}
+    };
+    attemptLogin();
+  }, []);
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
@@ -33,7 +47,7 @@ const Router = () => {
           }
         >
           <Route path="/profile"></Route>
-          <Route path="/cart"></Route>
+          <Route path="/cart" element={<Cart />}></Route>
           <Route path="/order/:id"></Route>
         </Route>
         <Route path="/product/:id" element={<Product />}></Route>

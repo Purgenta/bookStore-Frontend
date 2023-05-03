@@ -1,6 +1,8 @@
 import React, { InputHTMLAttributes, useEffect } from "react";
 import style from "./InputNumber.module.css";
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 interface InputNumberProps extends InputHTMLAttributes<HTMLInputElement> {
   min: number;
   max: number;
@@ -14,6 +16,7 @@ const InputNumber = ({ min, max, getChange }: InputNumberProps) => {
   return (
     <div className={style["input-wrapper"]}>
       <button
+        aria-label="decrement button"
         onClick={() =>
           setValue((value) => {
             if (value - 1 >= min) return value - 1;
@@ -22,7 +25,7 @@ const InputNumber = ({ min, max, getChange }: InputNumberProps) => {
         }
         className={style["action"]}
       >
-        -
+        <FontAwesomeIcon icon={faMinus} />
       </button>
       <input
         className={style["number-input"]}
@@ -37,6 +40,7 @@ const InputNumber = ({ min, max, getChange }: InputNumberProps) => {
         }}
       ></input>
       <button
+        aria-label="increment button"
         onClick={() =>
           setValue((value) => {
             if (value + 1 <= max) return value + 1;
@@ -45,7 +49,7 @@ const InputNumber = ({ min, max, getChange }: InputNumberProps) => {
         }
         className={style["action"]}
       >
-        +
+        <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
       </button>
     </div>
   );

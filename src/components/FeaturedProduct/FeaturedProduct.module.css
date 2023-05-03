@@ -41,6 +41,9 @@
 .add-favourite__product {
   color: #ccc9c9;
 }
+.remove-favourite__product {
+  color: var(--secondary-button-color);
+}
 .discount {
   position: absolute;
   top: 2%;

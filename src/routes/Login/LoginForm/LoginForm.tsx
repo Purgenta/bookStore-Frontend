@@ -25,6 +25,7 @@ const LoginForm = ({ submitHandler }: LoginFormProps) => {
     },
   });
   const { errors, touched } = formik;
+  console.log(formik.errors);
   return (
     <div className={style["login-form_wrapper"]}>
       <form
