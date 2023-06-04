@@ -9,6 +9,9 @@ const ProtectedRoute = lazy(() => {
 const Register = lazy(() => {
   return import("./routes/Register/Register");
 });
+const Profile = lazy(() => {
+  return import("./routes/Profile/Profile");
+});
 const Login = lazy(() => {
   return import("./routes/Login/Login");
 });
@@ -20,6 +23,9 @@ const Product = lazy(() => {
 });
 const Cart = lazy(() => {
   return import("./routes/Cart/Cart");
+});
+const Search = lazy(() => {
+  return import("./routes/Search/Search");
 });
 const Router = () => {
   const refresh = useRefreshToken();
@@ -38,6 +44,7 @@ const Router = () => {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register></Register>}></Route>
         <Route path="/forbidden"></Route>
+        <Route path="/search" element={<Search />}></Route>
         <Route
           element={
             <ProtectedRoute
@@ -46,7 +53,8 @@ const Router = () => {
             ></ProtectedRoute>
           }
         >
-          <Route path="/profile"></Route>
+          <Route path="/profile" element={<Profile />}></Route>
+          <Route path="/profile/:subroute" element={<Profile />}></Route>
           <Route path="/cart" element={<Cart />}></Route>
           <Route path="/order/:id"></Route>
         </Route>

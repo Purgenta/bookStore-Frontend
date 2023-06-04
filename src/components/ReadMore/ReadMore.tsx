@@ -1,6 +1,3 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGreaterThan } from "@fortawesome/free-solid-svg-icons";
 type ReadMoreProps = {
   paragraph: string;
   className?: string;

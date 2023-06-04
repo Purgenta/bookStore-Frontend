@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import style from "./ReviewForm.module.css";
 import validate from "./reviewFormValidation";
-import Rating from "../Rating/Rating";
+import Rating from "../../Rating/Rating";
 export type ReviewFormValues = {
   rating: number;
   comment: string;

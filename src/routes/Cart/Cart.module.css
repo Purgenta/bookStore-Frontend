@@ -1,4 +1,3 @@
-@import url("../../variables.module.css");
 .cart-items {
   overflow: scroll;
 }
@@ -7,7 +6,7 @@
   margin: 1rem 0rem;
 }
 .price-wrapper > h3 {
-  border-bottom: 2px soldi var(--secondary-highlight-color);
+  border-bottom: 2px solid var(--secondary-highlight-color);
 }
 .delete-btn {
   background-color: var(--main-button-background-color);

@@ -30,3 +30,15 @@
   align-items: center;
   gap: 0.2rem;
 }
+.hamburger {
+  display: none;
+  color: var(--secondary-text-color);
+}
+@media screen and (max-width: 500px) {
+  .account-actions {
+    display: none;
+  }
+  .hamburger {
+    display: block;
+  }
+}

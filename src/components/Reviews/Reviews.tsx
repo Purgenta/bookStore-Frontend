@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import style from "./Reviews.module.css";
 import { addNotification } from "../../redux/notification/notificationSlice";
 import { Review as UserReview } from "./Review/Review";
 import Review from "./Review/Review";
-import ReviewForm, { ReviewFormValues } from "../ReviewForm/ReviewForm";
+import ReviewForm, { ReviewFormValues } from "./ReviewForm/ReviewForm";
 import useAuthenticatedAxios from "../../axios/useAuthenticatedAxios";
 import { useDispatch } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
@@ -49,7 +49,7 @@ const Reviews = ({ product_id, canReview, className }: ReviewsProps) => {
       );
     }
   };
-  const getReviews = async () => {
+  const getReviews = useCallback(async () => {
     try {
       const reviewsResponse = (
         await axios.get(`review/reviewsByProduct/${product_id}?page=${page}`)
@@ -61,10 +61,13 @@ const Reviews = ({ product_id, canReview, className }: ReviewsProps) => {
         setNextPage(true);
       } else setNextPage(false);
     } catch (error) {}
-  };
+  }, [product_id]);
   useEffect(() => {
+    setReviews([]);
+    setNextPage(false);
+    setPage(0);
     getReviews();
-  }, []);
+  }, [getReviews]);
   const productReviews = reviews.map((userReview) => {
     return (
       <li key={userReview.id} className={style[`review`]}>
@@ -87,7 +90,11 @@ const Reviews = ({ product_id, canReview, className }: ReviewsProps) => {
           <ReviewForm onSubmit={addReview} />
         </div>
       )}
-      <ul className={className || style["reviews"]}>{productReviews}</ul>
+      {productReviews.length ? (
+        <ul className={className || style["reviews"]}>{productReviews}</ul>
+      ) : (
+        <h3>No reviews yet...</h3>
+      )}
       {nextPage && (
         <button className={style["load-reviews"]} onClick={getReviews}>
           Load More

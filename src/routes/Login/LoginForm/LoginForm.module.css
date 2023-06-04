@@ -1,4 +1,3 @@
-@import url("../../../variables.module.css");
 .authentication-form {
   color: var(--secondary-text-color);
   display: flex;

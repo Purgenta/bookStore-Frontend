@@ -6,12 +6,14 @@ import {
   faHeart,
   faBook,
   faCartShopping,
+  faBars,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticationSelector } from "../../redux/authentication/authenticationSlice";
 import { favouritesCount } from "../../redux/favourites/favouritesSlice";
 import { useEffect } from "react";
 import useAuthenticatedAxios from "../../axios/useAuthenticatedAxios";
+import { faHamburger } from "@fortawesome/free-solid-svg-icons";
 import { getFavourites } from "../../redux/favourites/favouritesSlice";
 import { AppDispatch } from "../../redux/store";
 const Navigation = () => {
@@ -31,6 +33,11 @@ const Navigation = () => {
             <FontAwesomeIcon size="xl" icon={faBook} />
           </NavLink>
         </div>
+        <FontAwesomeIcon
+          icon={faBars}
+          className={style["hamburger"]}
+          size="xl"
+        />
         <ul className={style["account-actions"]}>
           <NavLink
             className={style["flex-link"]}

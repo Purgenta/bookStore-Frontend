@@ -1,0 +1,31 @@
+.dropdown button {
+  color: #272727;
+  font-size: 1.2rem;
+}
+.toggle-icon {
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+}
+.toggle-dropdown {
+  width: 100%;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.children-wrapper,
+.toggle-icon {
+  transition: all 0.2s ease-in;
+}
+.children-wrapper {
+  overflow: hidden;
+}
+.active-children__wrapper {
+  height: 100%;
+}
+.off-children__wrapper {
+  height: 0px;
+}
+.active-icon {
+  transform: rotate(90deg);
+}
