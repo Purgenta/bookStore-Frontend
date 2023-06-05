@@ -1,12 +1,19 @@
 import React, { useEffect } from "react";
 import style from "./MultiSelect.module.css";
 import { useState } from "react";
+type Options = {
+  value: string | number;
+  label: string;
+  isChecked: boolean;
+};
 interface MultiSelectProps {
-  options: string[];
+  options: Options[];
   changeHandler: (selectedOptions: string[]) => unknown;
 }
 function MultiSelect({ options, changeHandler }: MultiSelectProps) {
-  const [selected, setSelected] = useState<Set<string>>(new Set<string>());
+  const [selected, setSelected] = useState<Set<string>>(
+    new Set<string>(options.map((option) => "" + option.value))
+  );
   useEffect(() => {
     changeHandler([...selected]);
   }, [selected]);
@@ -16,7 +23,6 @@ function MultiSelect({ options, changeHandler }: MultiSelectProps) {
         <div key={index} className={style["input-group"]}>
           <input
             onChange={(event) => {
-              console.log(event.target.value);
               setSelected((prev) => {
                 if (prev.has(event.target.value)) {
                   prev.delete(event.target.value);
@@ -24,10 +30,11 @@ function MultiSelect({ options, changeHandler }: MultiSelectProps) {
                 return new Set<string>([...prev]);
               });
             }}
+            checked={selected.has(option.value + "")}
             type="checkbox"
-            value={option}
+            value={option.value}
           />
-          <label>{option}</label>
+          <label>{option.label}</label>
         </div>
       ))}
     </>

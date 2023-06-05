@@ -12,6 +12,8 @@ type RangeSliderProps = {
 };
 const RangeSlider = memo(
   ({ lower, upper, labelLower, labelUpper, onChange }: RangeSliderProps) => {
+    lower = +Math.floor(lower);
+    upper = +Math.ceil(upper);
     const [range, setRange] = useState({
       lower,
       upper,
@@ -41,7 +43,6 @@ const RangeSlider = memo(
     };
     const rangeWidth = (range.upper - range.lower) / (upper - lower);
     const leftOffSet = 100 - ((upper - range.lower) / (upper - lower)) * 100;
-    console.log(lowerRef.current?.offsetWidth);
     return (
       <div className={style["range-wrapper"]}>
         <div className={style["ranges"]}>
@@ -73,12 +74,12 @@ const RangeSlider = memo(
           <div className={style["out-range"]} />
         </div>
         <div className={style["price"]}>
-          <h3
-            className={style["price-lower"]}
-          >{`${range.lower} ${labelLower}`}</h3>
-          <h3
-            className={style["price-higher"]}
-          >{`${range.upper} ${labelUpper}`}</h3>
+          <h3 className={style["price-lower"]}>{`${range.lower.toFixed(
+            2
+          )} ${labelLower}`}</h3>
+          <h3 className={style["price-higher"]}>{`${range.upper.toFixed(
+            2
+          )} ${labelUpper}`}</h3>
         </div>
       </div>
     );

@@ -1,13 +1,17 @@
 import { useEffect } from "react";
 import { axiosPrivateInstance } from "./publicAxiosInstance";
-import { useSelector } from "react-redux";
-import { authenticationSelector } from "../redux/authentication/authenticationSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  authenticationSelector,
+  invalidateAuthentication,
+  updateAccessToken,
+} from "../redux/authentication/authenticationSlice";
 import { useNavigate } from "react-router-dom";
 import useRefreshToken from "./useRefreshToken";
 const useAuthenticatedAxios = () => {
   const authentication = useSelector(authenticationSelector);
   const refreshToken = useRefreshToken();
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   useEffect(() => {
     const requestInterceptor = axiosPrivateInstance.interceptors.request.use(
       (config) => {
@@ -35,7 +39,7 @@ const useAuthenticatedAxios = () => {
             ] = `Bearer ${refresh.accessToken}`;
             return axiosPrivateInstance(previousRequest);
           } catch (exception) {
-            navigate("/login");
+            dispatch(invalidateAuthentication());
           }
         }
         return Promise.reject(error);

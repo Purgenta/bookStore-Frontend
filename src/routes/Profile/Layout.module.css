@@ -1,0 +1,27 @@
+.user-information__items {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+.user-avatar {
+  border-radius: 50%;
+}
+.user-cover {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+@media screen and (max-width: 600px) {
+  .user-information__items {
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.profile-overview {
+  border-bottom: 1px solid gainsboro;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 0rem;
+}

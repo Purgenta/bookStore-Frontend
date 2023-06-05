@@ -1,0 +1,33 @@
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.filter-options > li {
+  padding: 0.2rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--secondary-highlight-color);
+}
+.filter {
+  border-right: 1px solid black;
+  position: sticky;
+  top: 0;
+  padding: 0rem 0.4rem;
+}
+.select-option {
+  border: none;
+  width: 100%;
+  font-size: 1.2rem;
+}
+.wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  align-items: center;
+}
+.date-lb {
+  margin-bottom: 1rem;
+}
+.datepicker {
+  font-size: 1rem;
+}

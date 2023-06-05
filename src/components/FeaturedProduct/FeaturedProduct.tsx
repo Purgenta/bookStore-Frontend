@@ -22,13 +22,11 @@ interface FeaturedProductProps {
   product: Product;
   className?: string;
   addCart?: boolean;
-  discount?: boolean;
   favourite?: boolean;
 }
 const FeaturedProduct = ({
   product,
   addCart,
-  discount,
   className,
   favourite,
 }: FeaturedProductProps) => {

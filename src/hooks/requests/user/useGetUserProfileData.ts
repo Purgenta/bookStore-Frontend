@@ -1,5 +1,5 @@
 import useSwr from "swr";
-import useAuthenticatedAxios from "../../axios/useAuthenticatedAxios";
+import useAuthenticatedAxios from "../../../axios/useAuthenticatedAxios";
 type Profile = {
   created_at: Date;
   email: string;
@@ -13,7 +13,7 @@ const useGetProfileData = () => {
   const getProfile = async () => {
     return (await axios.get("user/profile")).data as Profile;
   };
-  const { data } = useSwr(
+  const { data, mutate } = useSwr(
     () => "user/profile",
     () => getProfile(),
     {
@@ -23,6 +23,6 @@ const useGetProfileData = () => {
       revalidateIfStale: true,
     }
   );
-  return { data };
+  return { data, mutate };
 };
 export default useGetProfileData;

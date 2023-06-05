@@ -33,9 +33,14 @@ const authenticationSlice = createSlice({
         return { payload: { accessToken, role } };
       },
     },
+    invalidateAuthentication: (state) => {
+      state.isAuthenticated = false;
+      (state.accessToken = ""), (state.role = null);
+    },
   },
 });
 export const authenticationSelector = (state: RootState) =>
   state.authentication;
-export const { updateAccessToken } = authenticationSlice.actions;
+export const { updateAccessToken, invalidateAuthentication } =
+  authenticationSlice.actions;
 export default authenticationSlice.reducer;

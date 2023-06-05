@@ -1,11 +1,8 @@
 .profile-section {
   display: grid;
   padding: 2rem;
-  gap: 2rem;
+  gap: 4rem;
   grid-template-columns: max-content 1fr;
-}
-.profile-overview {
-  border-bottom: 1px solid gainsboro;
 }
 .profile-main {
   padding: 0rem 0.3rem;
@@ -17,36 +14,9 @@
   padding: 0rem 1rem;
   border-right: 1px solid gainsboro;
 }
-.user-information__items {
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-}
 .profile-tabs__links > li {
   border-bottom: 1px solid gainsboro;
   padding: 0.5rem 0rem;
-}
-.user-avatar {
-  border-radius: 50%;
-}
-.user-information {
-  padding: 0.8rem 0rem;
-  gap: 2rem;
-  display: flex;
-}
-.user-cover {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-@media screen and (max-width: 600px) {
-  .user-information__items {
-    display: grid;
-    gap: 0.5rem;
-    grid-template-areas:
-      "user email"
-      "user mobile";
-  }
 }
 @media screen and (max-width: 800px) {
   .profile-section {

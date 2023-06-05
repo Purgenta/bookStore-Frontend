@@ -1,28 +1,24 @@
-import { EditUserFormValuesProps } from "./EditUserForm";
-const namesRegex = new RegExp("^[A-Z]{1}[a-z]{1,30}$");
-const phoneRegex = new RegExp("^[0-9]{8,20}$");
-const validate = (values: EditUserFormValuesProps) => {
-  const errors: EditUserFormValuesProps = {
+import { FormValues } from "./EditUserForm";
+import {
+  nameValidation,
+  phoneValidation,
+  emailValidation,
+} from "../../../validation/validation";
+const validate = (values: FormValues) => {
+  const errors: FormValues = {
     email: "",
     name: "",
     last_name: "",
     phone_number: "",
   };
-  if (!namesRegex.test(values.name)) {
-    errors.name = "Please enter a valid name";
+  errors.last_name = nameValidation(values.last_name);
+  errors.email = emailValidation(values.email);
+  errors.name = nameValidation(values.name);
+  errors.phone_number = phoneValidation(values.phone_number);
+  let property: keyof typeof errors;
+  for (property in errors) {
+    if (errors[property] !== "") return errors;
   }
-  if (!namesRegex.test(values.last_name)) {
-    errors.last_name = "Please enter a valid last name";
-  }
-  if (!values.email) {
-    errors.email = "Please enter a valid email";
-  }
-  if (!phoneRegex.test(values.phone_number)) {
-    errors.phone_number = "Please enter a valid phone number";
-  }
-  if (!errors.email && !errors.name && !errors.last_name) {
-    return undefined;
-  }
-  return errors;
+  return undefined;
 };
 export default validate;

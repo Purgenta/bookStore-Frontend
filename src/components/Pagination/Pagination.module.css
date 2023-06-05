@@ -1,0 +1,71 @@
+.pagination {
+  margin: 2rem 0rem 0.2rem;
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  gap: 0.6rem;
+  color: var(--main-text-color);
+}
+.go-to > label {
+  display: block;
+  text-align: center;
+  margin: 0.5rem 0rem;
+}
+.nav-pagination {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pagination button {
+  font-size: 1.4rem;
+  color: inherit;
+  padding: 0.2rem 0.4rem;
+  background: rgba(255, 255, 255, 0.788);
+  border-radius: 16px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(160, 143, 143, 0.3);
+  color: var(--main-text-color);
+  font-weight: 100;
+}
+.active {
+  font-weight: bolder;
+  font-size: 1.8rem;
+}
+.go-to {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.go-to input {
+  background-color: white;
+  border-radius: 5px;
+  font-size: 1.4rem;
+  padding: 0.1rem 0.4rem;
+  margin: 0rem 0.3rem;
+}
+.go-to button {
+  background: var(--main-button-background);
+  color: var(--main-text-color);
+  font-size: 1.4rem;
+  border-radius: 5px;
+  padding: 0.2rem 0.4rem;
+}
+.go-to input[type="number"]::-webkit-inner-spin-button,
+.go-to input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+@media screen and (max-width: 520px) {
+  .pagination a {
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+  .pagination {
+    gap: 0.3rem;
+  }
+  a.active {
+    font-size: 1.4rem;
+  }
+}

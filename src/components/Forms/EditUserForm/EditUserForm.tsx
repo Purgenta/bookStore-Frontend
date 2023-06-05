@@ -1,19 +1,23 @@
 import { useFormik } from "formik";
-import {
-  faUser,
-  faEnvelope,
-  faKey,
-  faPhone,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUser, faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import style from "./EditUserForm.module.css";
+import validate from "./editUserFormValidation";
 import { useEffect, useState } from "react";
+import useUpdateUserInformation from "../../../hooks/requests/user/useUpdateUserInformation";
 export type EditUserFormValuesProps = {
   email: string;
   name: string;
   last_name: string;
   phone_number: string;
   emailError?: string;
+  onSuccess: () => unknown;
+};
+export type FormValues = {
+  email: string;
+  name: string;
+  last_name: string;
+  phone_number: string;
 };
 const EditUserForm = ({
   email,
@@ -21,11 +25,15 @@ const EditUserForm = ({
   last_name,
   emailError,
   phone_number,
+  onSuccess,
 }: EditUserFormValuesProps) => {
   const [wasAltereted, setWasAltered] = useState(false);
-  const formik = useFormik({
+  const { responseError, updateInformation } =
+    useUpdateUserInformation(onSuccess);
+  const formik = useFormik<FormValues>({
     initialValues: { email, name, last_name, phone_number },
-    onSubmit: () => {},
+    onSubmit: updateInformation,
+    validate,
   });
   const { touched, errors, isSubmitting, isValid, values } = formik;
   useEffect(() => {
@@ -43,7 +51,8 @@ const EditUserForm = ({
       className={style["edit-user__information"]}
       onSubmit={formik.handleSubmit}
     >
-      <label htmlFor={"name"}>Name</label>
+      <h3>{responseError}</h3>
+      <label htmlFor={"name"}>Name*</label>
       <div className={style["input-wrapper"]}>
         <FontAwesomeIcon size="lg" icon={faUser} />
         <input
@@ -60,7 +69,7 @@ const EditUserForm = ({
         <p className={style["error-message"]}>{errors.name}</p>
       )}
       <label className={style["auth-label"]} id="email">
-        Last name
+        Last name*
       </label>
       <div className={style["input-wrapper"]}>
         <FontAwesomeIcon icon={faUser} />
@@ -77,7 +86,7 @@ const EditUserForm = ({
       {errors["last_name"] && touched["last_name"] && (
         <p className={style["error-message"]}>{errors["last_name"]}</p>
       )}
-      <label className={style["auth-label"]}>Phone number</label>
+      <label className={style["auth-label"]}>Phone number*</label>
       <div className={style["input-wrapper"]}>
         <FontAwesomeIcon icon={faPhone} />
         <input
@@ -94,7 +103,7 @@ const EditUserForm = ({
         <p className={style["error-message"]}>{errors["phone_number"]}</p>
       )}
       <label className={style["auth-label"]} id="email">
-        Email
+        Email*
       </label>
       <div className={style["input-wrapper"]}>
         <FontAwesomeIcon icon={faEnvelope} />

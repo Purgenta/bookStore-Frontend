@@ -33,7 +33,9 @@ const Router = () => {
     const attemptLogin = async () => {
       try {
         await refresh();
-      } catch (error) {}
+      } catch (error) {
+        console.log(`expired auth`);
+      }
     };
     attemptLogin();
   }, []);
