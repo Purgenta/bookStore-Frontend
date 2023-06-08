@@ -8,6 +8,8 @@ export type ReviewFormValues = {
 };
 type ReviewFormProps = {
   onSubmit: (formValues: ReviewFormValues) => unknown;
+  review?: string;
+  rating?: number;
 };
 const ReviewForm = ({ onSubmit }: ReviewFormProps) => {
   const formik = useFormik({

@@ -26,7 +26,7 @@ const Login = () => {
           "isAuthenticated"
         >;
         dispatch(updateAccessToken(userData.accessToken!, userData.role!));
-        navigate("/test");
+        navigate("/profile");
       } catch (error) {
         if (!axiosCore.isAxiosError(error)) return;
         error as AxiosError;

@@ -40,7 +40,6 @@ const Favourite = ({ product_id, className }: FavouritesProps) => {
           dispatch(
             addNotification({
               message: "Favourite item added successfully",
-              id: nanoid(5),
               notificationType: "SUCCESS",
             })
           );
@@ -49,7 +48,6 @@ const Favourite = ({ product_id, className }: FavouritesProps) => {
           dispatch(
             addNotification({
               message: "Error while trying to add a favourite item",
-              id: nanoid(5),
               notificationType: "ERROR",
             })
           )
@@ -60,7 +58,6 @@ const Favourite = ({ product_id, className }: FavouritesProps) => {
           dispatch(
             addNotification({
               message: "Favourite item removed successfully",
-              id: nanoid(5),
               notificationType: "SUCCESS",
             })
           );
@@ -69,7 +66,6 @@ const Favourite = ({ product_id, className }: FavouritesProps) => {
           dispatch(
             addNotification({
               message: "Error while trying to remove favourite item",
-              id: nanoid(5),
               notificationType: "ERROR",
             })
           )

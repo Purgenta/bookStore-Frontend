@@ -1,6 +1,9 @@
 .cart-items {
   overflow: scroll;
 }
+.cart {
+  padding: 1rem 0rem;
+}
 .cart-section__title {
   border-bottom: 2px solid var(--secondary-highlight-color);
   margin: 1rem 0rem;

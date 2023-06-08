@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { DetailedProduct } from "./productType";
-import { isAxiosError } from "axios";
 import { useParams } from "react-router-dom";
 import { MultiSlider } from "../../components/MultiSlider/MultiSlider";
 import style from "./Product.module.css";
@@ -11,34 +9,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import useUpdateCartQuantity from "../../hooks/useUpdateCartQuantity";
 import Reviews from "../../components/Reviews/Reviews";
-import useAuthenticatedAxios from "../../axios/useAuthenticatedAxios";
 import FeaturedProduct from "../../components/FeaturedProduct/FeaturedProduct";
-type Response = {
-  product: DetailedProduct;
-  canReview: boolean;
-};
+import useGetBookById from "../../hooks/requests/books/useGetBookById";
+import { useSelector } from "react-redux";
+import { authenticationSelector } from "../../redux/authentication/authenticationSlice";
 export const Product = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState<DetailedProduct | null>(null);
   const [canReview, setCanReview] = useState(false);
-  const axios = useAuthenticatedAxios();
+  const { isAuthenticated } = useSelector(authenticationSelector);
+  const { data } = useGetBookById(`${id}`);
   const updateQuantity = useUpdateCartQuantity(Number(id));
-  const [quantity, setQuantity] = useState(0);
-  useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const productById = (await axios.get(`product/${id}`)).data as Response;
-        setProduct(productById.product);
-        setCanReview(productById.canReview);
-      } catch (error) {
-        if (isAxiosError(error)) {
-        }
-      }
-    };
-    getProduct();
-  }, [id]);
+  const [quantity, setQuantity] = useState(1);
   let newPrice: number | null = null;
-  if (product) {
+  const product = data ? data.product : null;
+  useEffect(() => {
+    if (data) setCanReview(data.canReview);
+  }, [data]);
+  if (data) {
+    const { product } = data;
     product.sale
       ? (newPrice =
           product.price - (product.price * product.sale.discount) / 100)
@@ -115,11 +103,13 @@ export const Product = () => {
               </div>
               <div className={style["add-item"]}>
                 <InputNumber
+                  value={1}
                   min={1}
                   max={product.quantity}
                   getChange={(input) => setQuantity(input)}
                 ></InputNumber>
                 <button
+                  disabled={!isAuthenticated}
                   onClick={async () => {
                     await updateQuantity(quantity);
                   }}
@@ -139,7 +129,11 @@ export const Product = () => {
         <div className={style["reviews-similiar__products"]}>
           <section className={style["reviews"]}>
             <h2>Reviews:</h2>
-            <Reviews canReview={canReview} product_id={product.id}></Reviews>
+            <Reviews
+              canReview={canReview}
+              key={id}
+              product_id={id ? +id : 0}
+            ></Reviews>
           </section>
           <div className={style["similiar-products__wrapper"]}>
             <h3>Similiar products</h3>
@@ -148,7 +142,6 @@ export const Product = () => {
                 return (
                   <li key={product.id}>
                     <FeaturedProduct
-                      discount
                       className={style["similiar-product"]}
                       product={product}
                     />

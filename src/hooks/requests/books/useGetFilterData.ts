@@ -4,6 +4,10 @@ type Genre = {
   name: string;
   id: number;
 };
+type Publisher = {
+  name: string;
+  id: number;
+};
 type ProductExtremes = {
   price: number;
   publishing_date: string;
@@ -15,6 +19,7 @@ type FilterOptions = {
     _min: ProductExtremes;
     _max: ProductExtremes;
   };
+  publishers: Publisher[];
 };
 
 const useGetFilterData = () => {

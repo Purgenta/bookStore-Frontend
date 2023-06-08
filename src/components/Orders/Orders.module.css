@@ -1,0 +1,12 @@
+.order-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
+}
+.review-btn {
+  color: var(--main-text-color);
+}
+.review-btn:disabled {
+  opacity: 0.1;
+}

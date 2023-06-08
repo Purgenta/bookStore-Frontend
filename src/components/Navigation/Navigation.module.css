@@ -21,6 +21,7 @@
   color: white;
   font-size: 0.9rem;
   align-items: center;
+  justify-content: center;
 }
 .page-logo__wrapper {
   color: white;
@@ -45,4 +46,7 @@
   .hamburger {
     display: block;
   }
+}
+.logout-btn {
+  background-color: transparent;
 }

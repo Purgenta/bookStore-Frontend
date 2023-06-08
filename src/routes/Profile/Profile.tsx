@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import style from "./Profile.module.css";
 import EditUserCredentials from "../../components/Forms/EditUserCredentials/EditCredentialsForm";
 import Layout from "./Layout";
+import Orders from "../../components/Orders/Orders";
 const Profile = () => {
   const { data, mutate } = useGetProfileData();
   const { subroute } = useParams();
@@ -68,6 +69,7 @@ const Profile = () => {
         {data && subroute === "edit-credentials" && (
           <EditUserCredentials></EditUserCredentials>
         )}
+        {data && subroute === "orders" && <Orders></Orders>}
       </section>
     </div>
   );

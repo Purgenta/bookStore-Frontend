@@ -1,0 +1,26 @@
+.price-wrapper > h3 {
+  border-bottom: 2px solid var(--secondary-highlight-color);
+}
+.delete-btn {
+  background-color: var(--main-button-background-color);
+  padding: 0.2rem 0.4rem;
+  font-size: 1.2rem;
+}
+.cart-items th {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.cart-items td,
+.cart-items th {
+  padding: 0.5rem 1rem;
+}
+.cart-items > tbody > tr:not(.total) > :first-child {
+  width: 136px;
+  height: 200px;
+  min-width: 136px;
+  min-height: 200px;
+}
+.cart-items img {
+  object-fit: cover;
+  aspect-ratio: 2/3;
+}

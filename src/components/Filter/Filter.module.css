@@ -3,6 +3,9 @@
   flex-direction: column;
   gap: 0.5rem;
 }
+.filter-options > li:first-child {
+  padding: 0.4rem;
+}
 .filter-options > li {
   padding: 0.2rem;
   border-radius: 0.5rem;
@@ -10,8 +13,6 @@
 }
 .filter {
   border-right: 1px solid black;
-  position: sticky;
-  top: 0;
   padding: 0rem 0.4rem;
 }
 .select-option {
@@ -30,4 +31,10 @@
 }
 .datepicker {
   font-size: 1rem;
+}
+.search-name {
+  display: block;
+  width: 100%;
+  border: none;
+  font-size: 1.2rem;
 }

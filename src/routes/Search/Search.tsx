@@ -13,6 +13,10 @@ const initState: Omit<QueryParams, "page"> = {
   orderBy: "price",
   sort: "asc",
   genres: [],
+  publishedDateLb: new Date("01 January 1000").toISOString(),
+  publishedDateUb: new Date().toISOString(),
+  publishers: [],
+  q: "",
 };
 const Search = () => {
   const { data: filterOptions } = useGetFilterData();
@@ -21,10 +25,10 @@ const Search = () => {
     useState<Omit<QueryParams, "page">>(initState);
   const [dataFetcher, setDataFetcher] = useState({ ...initState, page: 1 });
   useEffect(() => {
-    const timeout = setTimeout(
-      () => setDataFetcher((prev) => ({ page: 1, ...queryOptions })),
-      500
-    );
+    const timeout = setTimeout(() => {
+      setPage(1);
+      setDataFetcher({ page: 1, ...queryOptions });
+    }, 500);
     return () => clearTimeout(timeout);
   }, [queryOptions]);
   useEffect(() => {
@@ -44,6 +48,7 @@ const Search = () => {
         <h2>Search results</h2>
         <ul className={style["search-results__list"]}>
           {isLoading && <Loading></Loading>}
+          {!data?.products.length && <h3>Search results came up empty...</h3>}
           {!isLoading &&
             data?.products &&
             data.products.map((product) => (

@@ -18,6 +18,8 @@ const Filter = ({ onChange }: Props) => {
   const [price, setPrice] = useState({ priceLb: 0, priceUb: 100000 });
   const [orderBy, setOrderBy] = useState("price");
   const [genres, setGenres] = useState<string[]>([]);
+  const [publishers, setPublishers] = useState<string[]>([]);
+  const [searchName, setSearchName] = useState("");
   const { data: filterOptions } = useGetFilterData();
   const [date, setDate] = useState<
     | {
@@ -28,17 +30,45 @@ const Filter = ({ onChange }: Props) => {
   >(undefined);
   useEffect(() => {
     if (filterOptions) {
+      if (!date) {
+        setDate({
+          publishingDateLb: new Date(
+            filterOptions.productInfo._min.publishing_date
+          ),
+          publishingDateUb: new Date(
+            filterOptions.productInfo._max.publishing_date
+          ),
+        });
+      }
+    }
+  }, [filterOptions]);
+  useEffect(() => {
+    if (filterOptions) {
       onChange({
         orderBy,
         sort,
         priceLb: price.priceLb,
         priceUb: price.priceUb,
+        publishedDateLb: date?.publishingDateLb.toISOString() || "",
+        publishedDateUb: date?.publishingDateUb.toISOString() || "",
+        genres,
+        q: searchName,
+        publishers,
       });
     }
-  }, [sort, price, orderBy, date]);
+  }, [sort, price, orderBy, date, genres, searchName, publishers]);
   return (
     <aside className={style["filter"]}>
       <ul className={style["filter-options"]}>
+        <li>
+          <input
+            className={style["search-name"]}
+            type="text"
+            name="search name"
+            placeholder="search by phrase"
+            onChange={(e) => setSearchName(e.target.value)}
+          ></input>
+        </li>
         <li>
           <Dropdown label="Sort by">
             <select
@@ -47,7 +77,7 @@ const Filter = ({ onChange }: Props) => {
             >
               <option value="price">Price</option>
               <option value="publishing_date">Publishing date</option>
-              <option value="number_of_pages">Number of pages</option>
+              <option value="page_number">Number of pages</option>
             </select>
           </Dropdown>
         </li>
@@ -72,6 +102,20 @@ const Filter = ({ onChange }: Props) => {
                   value: genre.id,
                 }))}
                 changeHandler={(options) => setGenres(options)}
+              ></MultiSelect>
+            )}
+          </Dropdown>
+        </li>
+        <li>
+          <Dropdown label="Publishers">
+            {filterOptions && (
+              <MultiSelect
+                options={filterOptions.publishers.map((publisher) => ({
+                  isChecked: true,
+                  label: publisher.name,
+                  value: publisher.id,
+                }))}
+                changeHandler={(options) => setPublishers(options)}
               ></MultiSelect>
             )}
           </Dropdown>

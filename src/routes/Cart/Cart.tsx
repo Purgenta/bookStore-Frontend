@@ -1,34 +1,21 @@
-import React, { useEffect } from "react";
-import { Discount, ProductImage } from "../Product/productType";
+import { useEffect, useState } from "react";
 import style from "./Cart.module.css";
-import { useState } from "react";
-import useAuthenticatedAxios from "../../axios/useAuthenticatedAxios";
-import { useDispatch } from "react-redux";
-import { addNotification } from "../../redux/notification/notificationSlice";
-import { nanoid } from "@reduxjs/toolkit";
-import { isAxiosError } from "axios";
-type CartItem = {
-  product_id: number;
-  quantity: number;
-};
-type CartResponse = {
-  cartItem: CartItem[];
-  id: number;
-  title: string;
-  quantity: number;
-  price: number;
-  sale: Discount | null;
-  productImages: ProductImage[];
+import { CartResponse } from "../../types/cart";
+import useGetCartItems from "../../hooks/requests/cart/useGetCartItems";
+import CartItem from "../../components/CartItem/CartItem";
+import useCheckout from "../../hooks/requests/cart/useCheckout";
+export const productPricePerItem = (item: CartResponse) => {
+  return item.sale
+    ? item.price - (item.sale?.discount * item.price) / 100
+    : item.price;
 };
 const Cart = () => {
-  const axios = useAuthenticatedAxios();
-  const dispatch = useDispatch();
+  const { data } = useGetCartItems();
   const [cartItems, setCartItems] = useState<CartResponse[]>([]);
-  const productPricePerItem = (item: CartResponse) => {
-    return item.sale
-      ? item.price - (item.sale?.discount * item.price) / 100
-      : item.price;
-  };
+  const checkout = useCheckout();
+  useEffect(() => {
+    if (data) setCartItems(data);
+  }, [data]);
   const totalCost = (items: CartResponse[]) => {
     return items.reduce((acum, current) => {
       return acum + productPricePerItem(current) * current.cartItem[0].quantity;
@@ -39,70 +26,29 @@ const Cart = () => {
       return acum + current.price * current.cartItem[0].quantity;
     }, 0);
   };
-  const deleteCartItem = async (product_id: number) => {
-    try {
-      await axios.post("cart/deleteCartItem", {
-        product_id,
-      });
-      setCartItems((prev) => {
-        const remainingItems = prev.filter((item) => {
-          return item.id !== product_id;
-        });
-        return remainingItems;
-      });
-    } catch (error) {
-      dispatch(
-        addNotification({
-          message: "Error while trying to remove product ",
-          id: nanoid(5),
-          notificationType: "ERROR",
-        })
-      );
-    }
-  };
   const items = cartItems.map((item) => {
-    const itemPrice = productPricePerItem(item);
     return (
-      <tr key={item.title}>
-        <td>
-          <img src={item.productImages[0].image_url}></img>
-        </td>
-        <td>{item.title}</td>
-        <td>{`${item.price.toFixed(2)} \u20AC`}</td>
-        <td>{item.sale?.discount ? `${item.sale.discount} %` : "/"}</td>
-        <td>
-          {item.sale
-            ? `${(
-                item.price -
-                (item.sale?.discount * item.price) / 100
-              ).toFixed(2)} \u20AC`
-            : "/"}
-        </td>
-        <td>{item.cartItem[0].quantity}</td>
-        <td>{`${(item.cartItem[0].quantity * itemPrice).toFixed(
-          2
-        )} \u20AC`}</td>
-        <td>
-          <button
-            onClick={() => deleteCartItem(item.id)}
-            className={style["delete-btn"]}
-          >
-            Delete
-          </button>
-        </td>
-      </tr>
+      <CartItem
+        key={item.id}
+        onQuantityChange={(id, quantity) => {
+          setCartItems((prev) => {
+            const item = prev.find((item) => item.id === id);
+            console.log(item);
+            if (item?.cartItem[0].quantity)
+              item.cartItem[0].quantity = quantity;
+            return [...prev];
+          });
+        }}
+        item={item}
+        onItemDelete={(id) =>
+          setCartItems((prev) => prev.filter((item) => item.id !== id))
+        }
+      ></CartItem>
     );
   });
-  useEffect(() => {
-    const getcartItems = async () => {
-      const items = (await axios.get("cart/cartItems")).data;
-      setCartItems(items);
-    };
-    getcartItems();
-  }, []);
   return (
-    <section>
-      {cartItems.length && (
+    <section className={style["cart"]}>
+      {cartItems.length ? (
         <>
           <h2 className={style["cart-section__title"]}>Your cart</h2>
           <table className={style["cart-items"]}>
@@ -133,10 +79,24 @@ const Cart = () => {
                   totalWithoutDiscounts(cartItems) - totalCost(cartItems)
                 ).toFixed(2)} \u20AC`}</span>
               </h3>
-              <button className={style["checkout"]}>Checkout</button>
+              <button
+                onClick={async () => {
+                  try {
+                    await checkout();
+                    setCartItems([]);
+                  } catch (error) {
+                    console.log(error);
+                  }
+                }}
+                className={style["checkout"]}
+              >
+                Checkout
+              </button>
             </div>
           </div>
         </>
+      ) : (
+        <h2>No cart items please add some</h2>
       )}
     </section>
   );

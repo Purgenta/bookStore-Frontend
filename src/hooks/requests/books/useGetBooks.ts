@@ -1,5 +1,5 @@
 import axios from "../../../axios/publicAxiosInstance";
-import { Product } from "../../../components/FeaturedProduct/FeaturedProduct";
+import { Product } from "../../../types/product";
 import useSWR from "swr";
 export type QueryParams = {
   page: number;
@@ -8,6 +8,10 @@ export type QueryParams = {
   orderBy: string;
   sort: string;
   genres: string[];
+  publishedDateLb: string;
+  publishedDateUb: string;
+  q: string;
+  publishers: string[];
 };
 type Response = {
   products: Product[];
@@ -15,8 +19,8 @@ type Response = {
 };
 const useGetBooks = (params: QueryParams) => {
   const getBooks = async () => {
-    const response = await axios.get("product/filteredProducts", {
-      params,
+    const response = await axios.post("product/filteredProducts", {
+      ...params,
     });
     return response.data as Response;
   };

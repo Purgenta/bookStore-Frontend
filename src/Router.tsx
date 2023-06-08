@@ -2,7 +2,11 @@ import { lazy, Suspense } from "react";
 import { useEffect } from "react";
 import useRefreshToken from "./axios/useRefreshToken";
 import { Route, Routes } from "react-router-dom";
-import { Role } from "./redux/authentication/authenticationSlice";
+import { useDispatch } from "react-redux";
+import {
+  Role,
+  invalidateAuthentication,
+} from "./redux/authentication/authenticationSlice";
 const ProtectedRoute = lazy(() => {
   return import("./components/ProtectedRoute/ProtectedRoute");
 });
@@ -29,12 +33,13 @@ const Search = lazy(() => {
 });
 const Router = () => {
   const refresh = useRefreshToken();
+  const dispatch = useDispatch();
   useEffect(() => {
     const attemptLogin = async () => {
       try {
         await refresh();
       } catch (error) {
-        console.log(`expired auth`);
+        dispatch(invalidateAuthentication());
       }
     };
     attemptLogin();
