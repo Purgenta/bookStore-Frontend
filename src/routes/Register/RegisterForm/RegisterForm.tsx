@@ -5,6 +5,7 @@ import {
   faKey,
   faEnvelope,
   faPhone,
+  faHouse,
 } from "@fortawesome/free-solid-svg-icons";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
@@ -15,6 +16,7 @@ export interface FormValues {
   name: string;
   last_name: string;
   phone_number: string;
+  adress: string;
 }
 type RegisterFormProps = {
   submitHandler: (formValues: FormValues) => unknown;
@@ -28,6 +30,7 @@ const RegisterForm = ({
 }: RegisterFormProps) => {
   const formik = useFormik({
     initialValues: {
+      adress: "",
       name: "",
       last_name: "",
       email: "",
@@ -37,11 +40,12 @@ const RegisterForm = ({
     enableReinitialize: true,
     validateOnMount: true,
     validate,
-    onSubmit: (values) => {
-      submitHandler(values);
+    onSubmit: async (values) => {
+      await submitHandler(values);
     },
   });
   const { touched, errors, isSubmitting } = formik;
+  console.log(errors, isSubmitting.valueOf);
   return (
     <div className={style["register-form__wrapper"]}>
       <form
@@ -137,6 +141,20 @@ const RegisterForm = ({
         {errors.password && touched.password && (
           <p className={style["error-message"]}>{errors.password}</p>
         )}
+        <label className={style["auth-label"]} htmlFor="adress">
+          Adress
+        </label>
+        <div className={style["input-wrapper"]}>
+          <FontAwesomeIcon icon={faHouse} />
+          <input
+            className={style["auth-input"]}
+            name="adress"
+            type="text"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            placeholder="Enter your adress"
+          />
+        </div>
         <button
           type="submit"
           className={style["submit-btn"]}

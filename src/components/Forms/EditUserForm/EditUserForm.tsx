@@ -5,12 +5,16 @@ import style from "./EditUserForm.module.css";
 import validate from "./editUserFormValidation";
 import { useEffect, useState } from "react";
 import useUpdateUserInformation from "../../../hooks/requests/user/useUpdateUserInformation";
+import { Genre } from "../../../types/product";
 export type EditUserFormValuesProps = {
   email: string;
   name: string;
   last_name: string;
   phone_number: string;
   emailError?: string;
+  prefferences?: number;
+  adress: string;
+  genreId?: number;
   onSuccess: () => unknown;
 };
 export type FormValues = {
@@ -18,8 +22,11 @@ export type FormValues = {
   name: string;
   last_name: string;
   phone_number: string;
+  adress: string;
 };
 const EditUserForm = ({
+  prefferences,
+  adress,
   email,
   name,
   last_name,
@@ -31,7 +38,7 @@ const EditUserForm = ({
   const { responseError, updateInformation } =
     useUpdateUserInformation(onSuccess);
   const formik = useFormik<FormValues>({
-    initialValues: { email, name, last_name, phone_number },
+    initialValues: { email, name, last_name, phone_number, adress },
     onSubmit: updateInformation,
     validate,
   });
@@ -41,7 +48,8 @@ const EditUserForm = ({
       values.email === email &&
       values.last_name === last_name &&
       values.phone_number === phone_number &&
-      values.name === name
+      values.name === name &&
+      values.adress === adress
     )
       setWasAltered(false);
     else setWasAltered(true);
@@ -123,6 +131,21 @@ const EditUserForm = ({
       {errors.email && touched.email && (
         <p className={style["error-message"]}>{errors.email}</p>
       )}
+      <label className={style["auth-label"]} id="email">
+        Adress*
+      </label>
+      <div className={style["input-wrapper"]}>
+        <FontAwesomeIcon icon={faEnvelope} />
+        <input
+          className={style["auth-input"]}
+          name="adress"
+          type="text"
+          value={values.adress}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          placeholder="Enter your email adress"
+        />
+      </div>
       <div className={style["input-wrapper"]}>
         <button
           type="submit"

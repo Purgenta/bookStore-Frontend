@@ -48,7 +48,6 @@ const Orders = () => {
       </Modal>
       <ul className={style["orders"]}>
         {data &&
-          data.length &&
           data.map((order) => {
             return (
               <li key={order.id}>

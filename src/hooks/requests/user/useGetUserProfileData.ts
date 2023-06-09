@@ -1,5 +1,6 @@
 import useSwr from "swr";
 import useAuthenticatedAxios from "../../../axios/useAuthenticatedAxios";
+import { Genre } from "../../../types/product";
 type Profile = {
   created_at: Date;
   email: string;
@@ -7,6 +8,10 @@ type Profile = {
   name: string;
   phone_number: string;
   password: string;
+  adress: string;
+  prefferences: {
+    genre: Genre;
+  } | null;
 };
 const useGetProfileData = () => {
   const axios = useAuthenticatedAxios();

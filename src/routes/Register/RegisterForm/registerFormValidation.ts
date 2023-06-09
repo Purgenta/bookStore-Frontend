@@ -8,6 +8,7 @@ const validate = (values: FormValues) => {
     name: "",
     last_name: "",
     phone_number: "",
+    adress: "",
   };
   if (!namesRegex.test(values.name)) {
     errors.name = "Please enter a valid name";
@@ -25,7 +26,17 @@ const validate = (values: FormValues) => {
   if (password.length < 5 || password.length > 16) {
     errors.password = "Password lenght must be between 5 and 16 characters";
   }
-  if (!errors.email && !errors.password && !errors.name && !errors.last_name) {
+  const adress = values.adress.trim();
+  if (adress.length < 10 || adress.length > 30) {
+    errors.adress = "Adress length must be between 10 and 30";
+  }
+  if (
+    !errors.email &&
+    !errors.password &&
+    !errors.name &&
+    !errors.last_name &&
+    !errors.adress
+  ) {
     return undefined;
   }
   return errors;

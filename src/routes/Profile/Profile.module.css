@@ -22,5 +22,19 @@
   .profile-section {
     gap: 1rem;
     grid-template-columns: 1fr;
+    padding: 0.1rem;
+  }
+  .profile-tabs__links {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    overflow-x: scroll;
+    gap: 1rem;
+    padding: 0rem;
+    border: none;
+    align-items: center;
+  }
+  .profile-tabs__links > li {
+    border-bottom: none;
+    text-align: center;
   }
 }

@@ -25,7 +25,7 @@ const Reviews = ({ product_id, canReview, className }: ReviewsProps) => {
       setReviews((prev) => [...prev, ...data.reviews]);
       setNextPage(data.hasNextPage);
       setUserCanReview(data.canReview);
-    } else setReviews([]);
+    }
   }, [data]);
   const axios = useAuthenticatedAxios();
   const dispatch = useDispatch();
@@ -81,7 +81,7 @@ const Reviews = ({ product_id, canReview, className }: ReviewsProps) => {
       )}
       {nextPage && (
         <button
-          className={style["load-reviews"]}
+          className={style["load-review"]}
           onClick={() => setPage((page) => page + 1)}
         >
           Load More

@@ -6,16 +6,20 @@ type ReadMoreProps = {
 import { useState } from "react";
 import style from "./ReadMore.module.css";
 const ReadMore = ({ paragraph, className, cutoff }: ReadMoreProps) => {
+  if (!cutoff) cutoff = 350;
   const [readMore, setReadMore] = useState(false);
+  const showMore = paragraph.length < cutoff || readMore;
   return (
     <p className={className || ""}>
-      {readMore ? paragraph : paragraph.slice(0, cutoff || 350).concat("...")}
-      <a
-        onClick={() => setReadMore((prev) => !prev)}
-        className={style["expand-description"]}
-      >
-        {readMore ? "Read less" : "Read more"}
-      </a>
+      {showMore ? paragraph : paragraph.slice(0, cutoff).concat("...")}
+      {paragraph.length > cutoff && (
+        <a
+          onClick={() => setReadMore((prev) => !prev)}
+          className={style["expand-description"]}
+        >
+          {readMore && paragraph.length > cutoff ? "Read less" : "Read more"}
+        </a>
+      )}
     </p>
   );
 };

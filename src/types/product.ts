@@ -24,10 +24,8 @@ export type Review = {
   rating: number;
 };
 export type Genre = {
-  genre: {
-    id: string;
-    name: string;
-  };
+  id: number;
+  name: string;
 };
 export type Author = {
   name: string;

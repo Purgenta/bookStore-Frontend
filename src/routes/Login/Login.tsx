@@ -15,7 +15,6 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const sendLoginRequest = (formValues: FormValues) => {
-    console.log(`running`);
     const loginRequest = async () => {
       try {
         const response = await axios.post("account/login", {

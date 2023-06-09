@@ -6,6 +6,7 @@ import { useState } from "react";
 import { AxiosError } from "axios";
 import { ErrorResponse } from "../../errors/errorResponse";
 import RegisterForm from "./RegisterForm/RegisterForm";
+import { useDispatch } from "react-redux";
 type RegisterError = {
   errors: {
     email?: ErrorResponse | null;
@@ -13,8 +14,10 @@ type RegisterError = {
   };
 };
 import { FormValues } from "./RegisterForm/RegisterForm";
+import { addNotification } from "../../redux/notification/notificationSlice";
 const Register = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [errors, setErrors] = useState<RegisterError>({
     errors: { email: null },
   });
@@ -22,8 +25,20 @@ const Register = () => {
     const submitLoginData = async () => {
       try {
         await axios.post(`account/register`, formValues);
+        dispatch(
+          addNotification({
+            message: "Successfull registration",
+            notificationType: "SUCCESS",
+          })
+        );
         navigate("/login");
       } catch (error) {
+        dispatch(
+          addNotification({
+            message: "Error during registration",
+            notificationType: "ERROR",
+          })
+        );
         if (axiosCore.isAxiosError(error)) {
           const axiosError = error as AxiosError;
           if (axiosError.response?.status === 400) {
@@ -43,7 +58,7 @@ const Register = () => {
   return (
     <section className={style["authentication"]}>
       {errors && (
-        <p className={style["error-message"]}>{errors.errors.email?.msg}</p>
+        <h2 className={style["error-message"]}>{errors.errors.email?.msg}</h2>
       )}
       <RegisterForm submitHandler={submitHandler} />
     </section>

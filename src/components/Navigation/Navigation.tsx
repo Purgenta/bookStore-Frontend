@@ -9,6 +9,7 @@ import {
   faBars,
   faSearch,
   faDoorOpen,
+  faX,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -19,7 +20,7 @@ import {
   favouritesCount,
   setFavourites,
 } from "../../redux/favourites/favouritesSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useAuthenticatedAxios from "../../axios/useAuthenticatedAxios";
 import { getFavourites } from "../../redux/favourites/favouritesSlice";
 import { AppDispatch } from "../../redux/store";
@@ -29,6 +30,7 @@ const Navigation = () => {
   const { isAuthenticated } = useSelector(authenticationSelector);
   const count = useSelector(favouritesCount);
   const axios = useAuthenticatedAxios();
+  const [isActive, setIsActive] = useState(false);
   const handleLogout = async () => {
     try {
       axios.get("account/logout");
@@ -57,12 +59,26 @@ const Navigation = () => {
             />
           </NavLink>
         </div>
+
         <FontAwesomeIcon
-          icon={faBars}
           className={style["hamburger"]}
+          icon={faBars}
+          onClick={(e) => setIsActive(true)}
           size="xl"
         />
-        <ul className={style["account-actions"]}>
+        <FontAwesomeIcon
+          icon={faX}
+          size="2x"
+          onClick={(e) => setIsActive(false)}
+          className={`${style["close"]} ${
+            isActive ? style["active-close"] : ""
+          }`}
+        ></FontAwesomeIcon>
+        <ul
+          className={`${style["account-actions"]} ${
+            isActive ? style["active-actions"] : ""
+          }`}
+        >
           <li>
             <NavLink className={style["flex-link"]} to={"/search"}>
               <FontAwesomeIcon size="xl" icon={faSearch}></FontAwesomeIcon>
@@ -77,10 +93,10 @@ const Navigation = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink className={style["flex-link"]} to={"/favourites"}>
+            <div className={style["flex-link"]}>
               <FontAwesomeIcon size="xl" icon={faHeart}></FontAwesomeIcon>
               <span className="favourite-count">{count}</span>
-            </NavLink>
+            </div>
           </li>
           <li>
             <NavLink className={style["flex-link"]} to={"/cart"}>
@@ -92,9 +108,14 @@ const Navigation = () => {
           </li>
           {isAuthenticated && (
             <li>
-              <button onClick={handleLogout} className={style["logout-btn"]}>
-                <FontAwesomeIcon icon={faDoorOpen} size="xl"></FontAwesomeIcon>
-              </button>
+              <div className={style["flex-link"]}>
+                <button onClick={handleLogout} className={style["logout-btn"]}>
+                  <FontAwesomeIcon
+                    icon={faDoorOpen}
+                    size="xl"
+                  ></FontAwesomeIcon>
+                </button>
+              </div>
             </li>
           )}
         </ul>

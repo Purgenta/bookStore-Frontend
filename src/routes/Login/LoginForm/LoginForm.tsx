@@ -25,7 +25,6 @@ const LoginForm = ({ submitHandler }: LoginFormProps) => {
     },
   });
   const { errors, touched } = formik;
-  console.log(formik.errors);
   return (
     <div className={style["login-form_wrapper"]}>
       <form
@@ -68,7 +67,7 @@ const LoginForm = ({ submitHandler }: LoginFormProps) => {
           />
         </div>
         {errors.password && touched.password && (
-          <p className={style["error-message"]}>{errors.password}</p>
+          <h2 className={style["error-message"]}>{errors.password}</h2>
         )}
         <button
           type="submit"

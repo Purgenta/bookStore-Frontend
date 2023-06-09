@@ -14,6 +14,8 @@
 .top-nav {
   display: flex;
   justify-content: space-between;
+  width: 100%;
+  align-items: center;
 }
 .account-actions {
   display: flex;
@@ -26,9 +28,6 @@
 .page-logo__wrapper {
   color: white;
 }
-.top-nav {
-  width: 100%;
-}
 .flex-link {
   display: flex;
   flex-direction: row;
@@ -39,9 +38,18 @@
   display: none;
   color: var(--secondary-text-color);
 }
+.close {
+  display: none;
+}
 @media screen and (max-width: 500px) {
   .account-actions {
-    display: none;
+    top: 0;
+    right: 0;
+    transform: translateX(100vw);
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    flex-direction: column;
   }
   .hamburger {
     display: block;
@@ -49,4 +57,17 @@
 }
 .logout-btn {
   background-color: transparent;
+}
+.active-actions {
+  transform: translate(0vw);
+  transition: 1s all ease-in;
+  background-color: var(--header-color);
+}
+.active-close {
+  position: fixed;
+  top: 5%;
+  right: 5%;
+  display: inline-block;
+  color: var(--secondary-text-color);
+  z-index: 5;
 }

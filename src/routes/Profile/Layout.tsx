@@ -1,11 +1,21 @@
 import React from "react";
 import style from "./Layout.module.css";
+import { Genre } from "../../types/product";
+import useGetAllGenres from "../../hooks/requests/genres/useGetAllGenres";
+import useUpdatePrefferences from "../../hooks/requests/user/useUpdatePrefferences";
 type Props = {
   name: string;
   last_name: string;
   email: string;
   phone_number: string;
   created_at: Date;
+  prefferences?: Prefferences | null;
+};
+type Prefferences = {
+  genre: {
+    id: number;
+    name: string;
+  };
 };
 const Layout = ({
   name,
@@ -13,7 +23,10 @@ const Layout = ({
   email,
   created_at,
   phone_number,
+  prefferences,
 }: Props) => {
+  const { data } = useGetAllGenres();
+  const setPrefferences = useUpdatePrefferences();
   return (
     <header className={style["profile-overview"]}>
       <h2>User-information</h2>
@@ -27,8 +40,8 @@ const Layout = ({
             <h3 className={style["user-name"]}>{`${name} ${last_name}`}</h3>
           </div>
         </li>
-        <li>
-          <div className={style["user-email"]}>
+        <li className={style["user-email"]}>
+          <div>
             <h4>
               User email<br></br>
               {email}
@@ -54,6 +67,31 @@ const Layout = ({
                 month: "long",
               })}
             </h4>
+          </div>
+        </li>
+        <li>
+          <div className={style["preferences"]}>
+            <h4>Favourite genre</h4>
+            {data && (
+              <select
+                value={prefferences?.genre.id || undefined}
+                onChange={async (event) => {
+                  if (event.target.value !== "Pick a category") {
+                    await setPrefferences(+event.target.value);
+                  }
+                }}
+                placeholder="Add a favourite Category"
+              >
+                <option>Pick a category</option>
+                {data.map((genre) => {
+                  return (
+                    <option key={genre.id} value={genre.id}>
+                      {genre.name}
+                    </option>
+                  );
+                })}
+              </select>
+            )}
           </div>
         </li>
       </ul>

@@ -11,11 +11,17 @@
   align-items: center;
   gap: 0.5rem;
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 900px) {
   .user-information__items {
     display: grid;
     gap: 0.5rem;
     grid-template-columns: 1fr 1fr;
+  }
+  .user-information {
+    grid-column-start: span 2;
+  }
+  .user-email {
+    grid-column-start: span 2;
   }
 }
 .profile-overview {

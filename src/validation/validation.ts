@@ -8,6 +8,11 @@ const passwordValidation = (password: string) => {
 const nameValidation = (name: string) => {
   return !namesRegex.test(name) ? "Please enter a valid name" : "";
 };
+const adressValidation = (adress: string) => {
+  return adress.trim().length < 10 || adress.trim().length > 30
+    ? "Please enter a valid adress (10-30 chars)"
+    : "";
+};
 const phoneValidation = (phone_number: string) => {
   return !phoneRegex.test(phone_number)
     ? "Please enter a valid mobile phone"
@@ -15,4 +20,10 @@ const phoneValidation = (phone_number: string) => {
 };
 const emailValidation = (email: string) =>
   emailRegex.test(email) ? "" : "Please enter a valid email";
-export { phoneValidation, nameValidation, passwordValidation, emailValidation };
+export {
+  phoneValidation,
+  adressValidation,
+  nameValidation,
+  passwordValidation,
+  emailValidation,
+};
