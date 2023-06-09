@@ -6,29 +6,16 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import useLoginWarning from "../../hooks/useLoginWarning";
 import { useNavigate } from "react-router-dom";
-import { ProductImage } from "../../routes/Product/productType";
-import { Discount } from "../../routes/Product/productType";
-export type Product = {
-  id: number;
-  page_number: number;
-  price: number;
-  productImages: ProductImage[];
-  publishing_date: string;
-  quantity: number;
-  title: string;
-  sale?: Discount;
-};
+import { Product } from "../../types/product";
 interface FeaturedProductProps {
   product: Product;
   className?: string;
   addCart?: boolean;
-  discount?: boolean;
   favourite?: boolean;
 }
 const FeaturedProduct = ({
   product,
   addCart,
-  discount,
   className,
   favourite,
 }: FeaturedProductProps) => {

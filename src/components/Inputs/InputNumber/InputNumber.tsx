@@ -6,12 +6,20 @@ import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 interface InputNumberProps extends InputHTMLAttributes<HTMLInputElement> {
   min: number;
   max: number;
+  value: number;
   getChange: (input: number) => unknown;
 }
-const InputNumber = ({ min, max, getChange }: InputNumberProps) => {
-  const [value, setValue] = useState<number>(min as number);
+const InputNumber = ({
+  min,
+  max,
+  value: currentValue,
+  getChange,
+}: InputNumberProps) => {
+  const [value, setValue] = useState<number>(currentValue);
+  const [hasChanged, setHasChanged] = useState(false);
   useEffect(() => {
-    getChange(value);
+    if (!hasChanged) setHasChanged(true);
+    else getChange(value);
   }, [value]);
   return (
     <div className={style["input-wrapper"]}>

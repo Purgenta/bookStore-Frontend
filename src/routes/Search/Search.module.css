@@ -1,0 +1,29 @@
+.search {
+  display: grid;
+  position: relative;
+  grid-template-columns: max-content 1fr;
+  flex-grow: 1;
+  gap: 1.5rem;
+  padding: 1rem 0rem;
+}
+.search-results {
+  text-align: center;
+}
+.search-results > h2 {
+  margin-bottom: 1rem;
+}
+.search-results__list {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+}
+@media screen and (max-width: 800px) {
+  .search {
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content 1fr;
+    gap: 1rem;
+  }
+  .filter {
+    border-right: none;
+  }
+}

@@ -1,0 +1,40 @@
+.profile-section {
+  display: grid;
+  padding: 2rem;
+  gap: 4rem;
+  grid-template-columns: max-content 1fr;
+}
+.profile-main {
+  padding: 0rem 0.3rem;
+  flex-grow: 1;
+}
+.profile-tabs__links {
+  list-style-type: none;
+  font-size: 1.2rem;
+  padding: 0rem 1rem;
+  border-right: 1px solid gainsboro;
+}
+.profile-tabs__links > li {
+  border-bottom: 1px solid gainsboro;
+  padding: 0.5rem 0rem;
+}
+@media screen and (max-width: 800px) {
+  .profile-section {
+    gap: 1rem;
+    grid-template-columns: 1fr;
+    padding: 0.1rem;
+  }
+  .profile-tabs__links {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    overflow-x: scroll;
+    gap: 1rem;
+    padding: 0rem;
+    border: none;
+    align-items: center;
+  }
+  .profile-tabs__links > li {
+    border-bottom: none;
+    text-align: center;
+  }
+}

@@ -1,8 +1,8 @@
-import React, { SyntheticEvent, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 type RatingProps = {
   onChange: (rating: number) => unknown;
 };
-import Star from "../Star/Star";
+import Star from "./Star/Star";
 import { useState } from "react";
 import style from "./Rating.module.css";
 const Rating = ({ onChange }: RatingProps) => {

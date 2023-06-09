@@ -7,15 +7,10 @@ type ProtectedRouteProps = {
   isAuthenticated: boolean;
   role?: Role[];
 };
-import { useDispatch } from "react-redux";
-import useLoginWarning from "../../hooks/useLoginWarning";
 const ProtectedRoute = ({ isAuthenticated, role }: ProtectedRouteProps) => {
   const location = useLocation();
   const authentication = useSelector(authenticationSelector);
-  const loginWarning = useLoginWarning();
-  const dispatch = useDispatch();
   if (isAuthenticated && !authentication.isAuthenticated) {
-    loginWarning();
     return (
       <Navigate to={"/login"} state={{ from: location }} replace></Navigate>
     );

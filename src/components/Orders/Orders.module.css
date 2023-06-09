@@ -1,0 +1,17 @@
+.order-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
+}
+.orders {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+.review-btn {
+  color: var(--main-text-color);
+}
+.review-btn:disabled {
+  opacity: 0.1;
+}

@@ -1,0 +1,20 @@
+.edit-user__information {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.edit-user__information input {
+  padding: 0.2rem;
+  font-size: 1.2rem;
+}
+.input-wrapper {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.edit-user__information button {
+  background-color: var(--main-button-background-color);
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}

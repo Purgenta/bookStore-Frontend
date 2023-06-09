@@ -2,7 +2,7 @@ import useAuthenticatedAxios from "../axios/useAuthenticatedAxios";
 import { useDispatch } from "react-redux";
 import { addNotification } from "../redux/notification/notificationSlice";
 import { nanoid } from "@reduxjs/toolkit";
-import { isAxiosError } from "axios";
+import { AxiosError, isAxiosError } from "axios";
 const useUpdateCartQuantity = (product_id: number) => {
   const dispatch = useDispatch();
   const axios = useAuthenticatedAxios();
@@ -16,7 +16,6 @@ const useUpdateCartQuantity = (product_id: number) => {
         addNotification({
           message: "Item added successfully",
           notificationType: "SUCCESS",
-          id: nanoid(5),
         })
       );
     } catch (error: any) {
@@ -28,7 +27,6 @@ const useUpdateCartQuantity = (product_id: number) => {
         addNotification({
           message,
           notificationType: "ERROR",
-          id: nanoid(5),
         })
       );
     }

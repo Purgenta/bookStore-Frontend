@@ -15,7 +15,6 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const sendLoginRequest = (formValues: FormValues) => {
-    console.log(`running`);
     const loginRequest = async () => {
       try {
         const response = await axios.post("account/login", {
@@ -26,7 +25,7 @@ const Login = () => {
           "isAuthenticated"
         >;
         dispatch(updateAccessToken(userData.accessToken!, userData.role!));
-        navigate("/test");
+        navigate("/profile");
       } catch (error) {
         if (!axiosCore.isAxiosError(error)) return;
         error as AxiosError;

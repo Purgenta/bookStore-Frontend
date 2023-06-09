@@ -2,12 +2,19 @@ import { lazy, Suspense } from "react";
 import { useEffect } from "react";
 import useRefreshToken from "./axios/useRefreshToken";
 import { Route, Routes } from "react-router-dom";
-import { Role } from "./redux/authentication/authenticationSlice";
+import { useDispatch } from "react-redux";
+import {
+  Role,
+  invalidateAuthentication,
+} from "./redux/authentication/authenticationSlice";
 const ProtectedRoute = lazy(() => {
   return import("./components/ProtectedRoute/ProtectedRoute");
 });
 const Register = lazy(() => {
   return import("./routes/Register/Register");
+});
+const Profile = lazy(() => {
+  return import("./routes/Profile/Profile");
 });
 const Login = lazy(() => {
   return import("./routes/Login/Login");
@@ -21,13 +28,19 @@ const Product = lazy(() => {
 const Cart = lazy(() => {
   return import("./routes/Cart/Cart");
 });
+const Search = lazy(() => {
+  return import("./routes/Search/Search");
+});
 const Router = () => {
   const refresh = useRefreshToken();
+  const dispatch = useDispatch();
   useEffect(() => {
     const attemptLogin = async () => {
       try {
         await refresh();
-      } catch (error) {}
+      } catch (error) {
+        dispatch(invalidateAuthentication());
+      }
     };
     attemptLogin();
   }, []);
@@ -38,6 +51,7 @@ const Router = () => {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register></Register>}></Route>
         <Route path="/forbidden"></Route>
+        <Route path="/search" element={<Search />}></Route>
         <Route
           element={
             <ProtectedRoute
@@ -46,7 +60,8 @@ const Router = () => {
             ></ProtectedRoute>
           }
         >
-          <Route path="/profile"></Route>
+          <Route path="/profile" element={<Profile />}></Route>
+          <Route path="/profile/:subroute" element={<Profile />}></Route>
           <Route path="/cart" element={<Cart />}></Route>
           <Route path="/order/:id"></Route>
         </Route>

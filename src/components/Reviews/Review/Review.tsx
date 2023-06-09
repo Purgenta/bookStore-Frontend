@@ -2,17 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faStar } from "@fortawesome/free-solid-svg-icons";
 import ReadMore from "../../ReadMore/ReadMore";
 import style from "./Review.module.css";
-type User = {
-  name: string;
-  last_name: string;
-};
-export type Review = {
-  comment: string;
-  rating: number;
-  user: User;
-  id: number;
-};
-const Review = ({ comment, rating, user }: Review) => {
+import { Review as ReviewPost } from "../../../types/review";
+const Review = ({ comment, rating, user }: ReviewPost) => {
   let ratingStars: JSX.Element[] = [];
   while (rating > 0 || ratingStars.length < 5) {
     if (rating > 0) {

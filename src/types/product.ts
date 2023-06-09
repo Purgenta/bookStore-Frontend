@@ -1,6 +1,16 @@
-import { Product } from "../../components/FeaturedProduct/FeaturedProduct";
-type Publisher = {
+export type Publisher = {
   name: string;
+  id: number;
+};
+export type Product = {
+  id: number;
+  page_number: number;
+  price: number;
+  productImages: ProductImage[];
+  publishing_date: string;
+  quantity: number;
+  title: string;
+  sale?: Discount;
 };
 export type ProductImage = {
   id: number;
@@ -9,17 +19,15 @@ export type ProductImage = {
 export type Discount = {
   discount: number;
 };
-type Review = {
+export type Review = {
   comment: string;
   rating: number;
 };
-type Genre = {
-  genre: {
-    id: string;
-    name: string;
-  };
+export type Genre = {
+  id: number;
+  name: string;
 };
-type Author = {
+export type Author = {
   name: string;
   id: number;
   last_name: string;

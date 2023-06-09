@@ -1,7 +1,9 @@
 import { UserNotification } from "../../components/Notifications/Notification/Notification";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
+import { nanoid } from "@reduxjs/toolkit";
 const initialNotifications: UserNotification[] = [];
+let payload: Omit<UserNotification, "id">;
 const notificationSlice = createSlice({
   name: "notifications",
   initialState: {
@@ -12,11 +14,11 @@ const notificationSlice = createSlice({
       state.notifications.shift();
     },
     addNotification: {
-      reducer: (state, action: PayloadAction<UserNotification>) => {
-        state.notifications.push(action.payload);
+      reducer: (state, action: PayloadAction<typeof payload>) => {
+        state.notifications.push({ ...action.payload, id: nanoid(5) });
         return state;
       },
-      prepare: (notification: UserNotification) => {
+      prepare: (notification: typeof payload) => {
         return { payload: notification };
       },
     },
