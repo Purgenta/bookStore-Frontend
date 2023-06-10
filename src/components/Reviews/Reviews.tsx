@@ -7,24 +7,22 @@ import ReviewForm, { ReviewFormValues } from "./ReviewForm/ReviewForm";
 import useAuthenticatedAxios from "../../axios/useAuthenticatedAxios";
 import { useDispatch } from "react-redux";
 import useGetReviews from "../../hooks/requests/reviews/useGetReviews";
+import { mutate } from "swr";
 type ReviewsProps = {
   product_id: number;
   className?: string;
   canReview: boolean;
 };
 const Reviews = ({ product_id, canReview, className }: ReviewsProps) => {
-  console.log(product_id);
   const [reviews, setReviews] = useState<UserReview[]>([]);
-  console.log(reviews);
   const [userCanReview, setUserCanReview] = useState(canReview);
   const [page, setPage] = useState(0);
-  const { data } = useGetReviews(product_id, page);
+  const { data, mutate } = useGetReviews(product_id, page);
   const [nextPage, setNextPage] = useState(false);
   useEffect(() => {
     if (data) {
       setReviews((prev) => [...prev, ...data.reviews]);
       setNextPage(data.hasNextPage);
-      setUserCanReview(data.canReview);
     }
   }, [data]);
   const axios = useAuthenticatedAxios();
@@ -43,6 +41,9 @@ const Reviews = ({ product_id, canReview, className }: ReviewsProps) => {
         })
       );
       setUserCanReview(false);
+      setReviews([]);
+      setPage(0);
+      mutate();
     } catch (error) {
       dispatch(
         addNotification({

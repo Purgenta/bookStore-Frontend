@@ -13,6 +13,7 @@ const Profile = () => {
     <div className={style["profile-main"]}>
       {data && (
         <Layout
+          mutate={mutate}
           created_at={data.created_at}
           email={data.email}
           phone_number={data.phone_number}

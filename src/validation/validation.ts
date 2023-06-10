@@ -1,14 +1,17 @@
-const namesRegex = new RegExp("^[A-Z]{1}[a-z]{1,30}$");
+const namesRegex = new RegExp("^[A-Z]{1}[a-z]{2,30}$");
 const phoneRegex = new RegExp("^[0-9]{8,20}$");
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 const passwordValidation = (password: string) => {
+  password.trim();
   if (password.length >= 5 && password.length <= 16) return "";
   return "Your password length must be between 5 and 16";
 };
 const nameValidation = (name: string) => {
+  name = name.trim();
   return !namesRegex.test(name) ? "Please enter a valid name" : "";
 };
 const adressValidation = (adress: string) => {
+  adress.trim();
   return adress.trim().length < 10 || adress.trim().length > 30
     ? "Please enter a valid adress (10-30 chars)"
     : "";

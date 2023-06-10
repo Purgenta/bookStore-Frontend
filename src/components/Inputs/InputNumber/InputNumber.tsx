@@ -36,6 +36,7 @@ const InputNumber = ({
         <FontAwesomeIcon icon={faMinus} />
       </button>
       <input
+        aria-label="Number input"
         className={style["number-input"]}
         type="number"
         min={min}

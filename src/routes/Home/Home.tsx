@@ -1,14 +1,8 @@
-import { useEffect, useState } from "react";
 import style from "./Home.module.css";
-import axios from "../../axios/publicAxiosInstance";
 import { MultiSlider } from "../../components/MultiSlider/MultiSlider";
 import FeaturedProduct from "../../components/FeaturedProduct/FeaturedProduct";
-import { Product } from "../../components/FeaturedProduct/FeaturedProduct";
+import { Product } from "../../types/product";
 import useGetFeaturedBooks from "../../hooks/requests/books/useGetFeaturedBooks";
-interface FeaturedProducts {
-  newestProducts: Product[];
-  bestRated: Product[];
-}
 const Home = () => {
   const { data: featuredProducts } = useGetFeaturedBooks();
   return (

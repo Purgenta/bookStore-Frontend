@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { Product as FavouriteProduct } from "../../components/FeaturedProduct/FeaturedProduct";
+import { Product } from "../../types/product";
 import { AxiosInstance } from "axios";
 const FAVOURITES_URL = "user/favourites";
 const FAVOURITE_ADD = "user/addFavourite";
@@ -10,7 +10,7 @@ export const getFavourites = createAsyncThunk(
   "fetch/favourites",
   async (axios: AxiosInstance) => {
     try {
-      return (await axios.get(FAVOURITES_URL)).data as FavouriteProduct[];
+      return (await axios.get(FAVOURITES_URL)).data as Product[];
     } catch (error) {}
   }
 );
@@ -28,7 +28,7 @@ export const addFavouriteProduct = createAsyncThunk(
       const addRequest = await axios.post(FAVOURITE_ADD, {
         product_id,
       });
-      return (await addRequest.data) as FavouriteProduct[];
+      return (await addRequest.data) as Product[];
     } catch (error) {}
   }
 );
@@ -40,11 +40,11 @@ export const removeFavouriteProduct = createAsyncThunk(
       const addRequest = await axios.post(FAVOURITE_REMOVE, {
         product_id,
       });
-      return (await addRequest.data) as FavouriteProduct[];
+      return (await addRequest.data) as Product[];
     } catch (error) {}
   }
 );
-const favouriteProducts: FavouriteProduct[] = [];
+const favouriteProducts: Product[] = [];
 const favouritesSlice = createSlice({
   name: "favourites",
   initialState: {
@@ -53,11 +53,11 @@ const favouritesSlice = createSlice({
   },
   reducers: {
     setFavourites: {
-      reducer: (state, action: PayloadAction<FavouriteProduct[]>) => {
+      reducer: (state, action: PayloadAction<Product[]>) => {
         state.favouriteProducts = action.payload;
         return state;
       },
-      prepare: (favourites: FavouriteProduct[]) => {
+      prepare: (favourites: Product[]) => {
         return { payload: favourites };
       },
     },
