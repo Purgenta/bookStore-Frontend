@@ -24,23 +24,22 @@ const EditUserCredentials = () => {
     },
   });
   const { isValid, isSubmitting, errors, touched } = formik;
+  console.log(errors.currentPassword);
   return (
     <form className={style["credentials-form"]} onSubmit={formik.handleSubmit}>
       <h3>{responseError}</h3>
-      {errors.currentPassword && touched.currentPassword && (
-        <p className={style["error-message"]}>{errors.currentPassword}</p>
-      )}
       <label htmlFor="currentPassword">Current password:</label>
       <div className={style["input-group__wrapper"]}>
         <FontAwesomeIcon icon={faLock}></FontAwesomeIcon>
         <input
           type="password"
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           name="currentPassword"
         ></input>
       </div>
-      {errors.newPassword && touched.newPassword && (
-        <p className={style["error-message"]}>{errors.newPassword}</p>
+      {errors.currentPassword && touched.currentPassword && (
+        <p className={style["error-message"]}>{errors.currentPassword}</p>
       )}
       <label htmlFor="newPassword">New password:</label>
       <div className={style["input-group__wrapper"]}>
@@ -49,10 +48,11 @@ const EditUserCredentials = () => {
           type="password"
           onChange={formik.handleChange}
           name="newPassword"
+          onBlur={formik.handleBlur}
         ></input>
       </div>
-      {errors.confirmNewPassword && touched.confirmNewPassword && (
-        <p className={style["error-message"]}>{errors.confirmNewPassword}</p>
+      {errors.newPassword && touched.newPassword && (
+        <p className={style["error-message"]}>{errors.newPassword}</p>
       )}
       <label htmlFor="confirmNewPassword">Confirm new password:</label>
       <div className={style["input-group__wrapper"]}>
@@ -61,8 +61,12 @@ const EditUserCredentials = () => {
           type="password"
           onChange={formik.handleChange}
           name="confirmNewPassword"
+          onBlur={formik.handleBlur}
         ></input>
       </div>
+      {errors.confirmNewPassword && touched.confirmNewPassword && (
+        <p className={style["error-message"]}>{errors.confirmNewPassword}</p>
+      )}
       <div className={style["input-group-wrapper"]}>
         <button type="submit" disabled={!isValid || isSubmitting}>
           Change password

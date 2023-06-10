@@ -52,8 +52,9 @@ const Navigation = () => {
     <nav className={style["main-nav"]}>
       <div className={style["top-nav"]}>
         <div className={style["page-logo__wrapper"]}>
-          <NavLink to={"/home"}>
+          <NavLink aria-label="Home page" to={"/home"}>
             <img
+              alt="logo"
               className={style["logo"]}
               src="https://www.knjizare-vulkan.rs/files/images/vulkan/logo.png.webp"
             />
@@ -63,13 +64,15 @@ const Navigation = () => {
         <FontAwesomeIcon
           className={style["hamburger"]}
           icon={faBars}
+          aria-label="open navigation"
           onClick={(e) => setIsActive(true)}
           size="xl"
         />
         <FontAwesomeIcon
           icon={faX}
+          aria-label="close navigation"
           size="2x"
-          onClick={(e) => setIsActive(false)}
+          onClick={() => setIsActive(false)}
           className={`${style["close"]} ${
             isActive ? style["active-close"] : ""
           }`}
@@ -80,12 +83,17 @@ const Navigation = () => {
           }`}
         >
           <li>
-            <NavLink className={style["flex-link"]} to={"/search"}>
+            <NavLink
+              aria-label="search"
+              className={style["flex-link"]}
+              to={"/search"}
+            >
               <FontAwesomeIcon size="xl" icon={faSearch}></FontAwesomeIcon>
             </NavLink>
           </li>
           <li>
             <NavLink
+              aria-label="account-action"
               className={style["flex-link"]}
               to={isAuthenticated ? "/profile" : "/login"}
             >
@@ -94,12 +102,20 @@ const Navigation = () => {
           </li>
           <li>
             <div className={style["flex-link"]}>
-              <FontAwesomeIcon size="xl" icon={faHeart}></FontAwesomeIcon>
+              <FontAwesomeIcon
+                aria-label="favourite-counter"
+                size="xl"
+                icon={faHeart}
+              ></FontAwesomeIcon>
               <span className="favourite-count">{count}</span>
             </div>
           </li>
           <li>
-            <NavLink className={style["flex-link"]} to={"/cart"}>
+            <NavLink
+              aria-label="cart"
+              className={style["flex-link"]}
+              to={"/cart"}
+            >
               <FontAwesomeIcon
                 size="xl"
                 icon={faCartShopping}
@@ -109,7 +125,11 @@ const Navigation = () => {
           {isAuthenticated && (
             <li>
               <div className={style["flex-link"]}>
-                <button onClick={handleLogout} className={style["logout-btn"]}>
+                <button
+                  aria-label="logout"
+                  onClick={handleLogout}
+                  className={style["logout-btn"]}
+                >
                   <FontAwesomeIcon
                     icon={faDoorOpen}
                     size="xl"

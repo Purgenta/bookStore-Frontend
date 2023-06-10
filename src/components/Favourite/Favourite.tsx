@@ -73,7 +73,11 @@ const Favourite = ({ product_id, className }: FavouritesProps) => {
     }
   };
   return (
-    <button className={className} onClick={onFavouriteClick}>
+    <button
+      aria-label="Add to favourites"
+      className={className}
+      onClick={onFavouriteClick}
+    >
       <FontAwesomeIcon
         className={
           isFavourite

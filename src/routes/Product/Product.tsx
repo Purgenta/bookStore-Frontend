@@ -15,16 +15,12 @@ import { useSelector } from "react-redux";
 import { authenticationSelector } from "../../redux/authentication/authenticationSlice";
 export const Product = () => {
   const { id } = useParams();
-  const [canReview, setCanReview] = useState(false);
   const { isAuthenticated } = useSelector(authenticationSelector);
   const { data } = useGetBookById(`${id}`);
   const updateQuantity = useUpdateCartQuantity(Number(id));
   const [quantity, setQuantity] = useState(1);
   let newPrice: number | null = null;
   const product = data ? data.product : null;
-  useEffect(() => {
-    if (data) setCanReview(data.canReview);
-  }, [data]);
   if (data) {
     const { product } = data;
     product.sale
@@ -130,7 +126,7 @@ export const Product = () => {
           <section className={style["reviews"]}>
             <h2>Reviews:</h2>
             <Reviews
-              canReview={canReview}
+              canReview={data ? data.canReview : false}
               key={id}
               product_id={id ? +id : 0}
             ></Reviews>

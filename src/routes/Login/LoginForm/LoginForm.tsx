@@ -67,7 +67,7 @@ const LoginForm = ({ submitHandler }: LoginFormProps) => {
           />
         </div>
         {errors.password && touched.password && (
-          <h2 className={style["error-message"]}>{errors.password}</h2>
+          <p className={style["error-message"]}>{errors.password}</p>
         )}
         <button
           type="submit"

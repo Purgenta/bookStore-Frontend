@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { Product } from "../../../components/FeaturedProduct/FeaturedProduct";
+import { Product } from "../../../types/product";
 type FeaturedProducts = {
   newestProducts: Product[];
   bestRated: Product[];

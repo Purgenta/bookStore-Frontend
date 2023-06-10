@@ -3,6 +3,7 @@ import style from "./Layout.module.css";
 import { Genre } from "../../types/product";
 import useGetAllGenres from "../../hooks/requests/genres/useGetAllGenres";
 import useUpdatePrefferences from "../../hooks/requests/user/useUpdatePrefferences";
+import { KeyedMutator } from "swr";
 type Props = {
   name: string;
   last_name: string;
@@ -10,6 +11,7 @@ type Props = {
   phone_number: string;
   created_at: Date;
   prefferences?: Prefferences | null;
+  mutate: KeyedMutator<any>;
 };
 type Prefferences = {
   genre: {
@@ -24,6 +26,7 @@ const Layout = ({
   created_at,
   phone_number,
   prefferences,
+  mutate,
 }: Props) => {
   const { data } = useGetAllGenres();
   const setPrefferences = useUpdatePrefferences();
@@ -34,6 +37,7 @@ const Layout = ({
         <li className={style["user-information"]}>
           <div className={style["user-cover"]}>
             <img
+              alt="user"
               className={style["user-avatar"]}
               src="https://www.knjizare-vulkan.rs/nb-public/themes/nbshop5_v5_8/_static/images/core/user.png"
             ></img>
@@ -78,6 +82,7 @@ const Layout = ({
                 onChange={async (event) => {
                   if (event.target.value !== "Pick a category") {
                     await setPrefferences(+event.target.value);
+                    mutate();
                   }
                 }}
                 placeholder="Add a favourite Category"

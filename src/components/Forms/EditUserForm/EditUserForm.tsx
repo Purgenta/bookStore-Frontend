@@ -146,6 +146,9 @@ const EditUserForm = ({
           placeholder="Enter your email adress"
         />
       </div>
+      {errors.adress && touched.adress && (
+        <p className={style["error-message"]}>{errors.adress}</p>
+      )}
       <div className={style["input-wrapper"]}>
         <button
           type="submit"

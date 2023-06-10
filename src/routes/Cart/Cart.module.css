@@ -1,5 +1,7 @@
 .cart-items {
-  overflow: scroll;
+  overflow-x: scroll;
+  white-space: nowrap;
+  display: block;
 }
 .cart {
   padding: 1rem 0rem;

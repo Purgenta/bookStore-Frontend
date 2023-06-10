@@ -44,7 +44,7 @@ export type DetailedProduct = {
   title: string;
   sale?: Discount;
   description: string;
-  genre: Genre[];
+  genre: Array<{ genre: Genre }>;
   review: Review[];
   publisher: Publisher;
 };

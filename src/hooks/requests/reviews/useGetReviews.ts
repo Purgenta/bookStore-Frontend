@@ -13,7 +13,7 @@ const useGetReviews = (product_id: number, page: number) => {
     const reviewsResponse = (await axios.get(key)).data as ReviewResponse;
     return reviewsResponse;
   };
-  const { data } = useSWR(
+  const { data, mutate } = useSWR(
     () => [product_id, page],
     () => getReview(),
     {
@@ -23,6 +23,6 @@ const useGetReviews = (product_id: number, page: number) => {
       revalidateIfStale: true,
     }
   );
-  return { data };
+  return { data, mutate };
 };
 export default useGetReviews;
