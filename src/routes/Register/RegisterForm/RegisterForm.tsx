@@ -155,6 +155,9 @@ const RegisterForm = ({
             placeholder="Enter your adress"
           />
         </div>
+        {errors.adress && touched.adress && (
+          <p className={style["error-message"]}>{errors.adress}</p>
+        )}
         <button
           type="submit"
           className={style["submit-btn"]}
