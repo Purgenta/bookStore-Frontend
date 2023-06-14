@@ -7,6 +7,8 @@ import useGetBooks from "../../hooks/requests/books/useGetBooks";
 import Pagination from "../../components/Pagination/Pagination";
 import Filter from "../../components/Filter/Filter";
 import Loading from "../../components/Loading/Loading";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSliders, faX } from "@fortawesome/free-solid-svg-icons";
 const initState: Omit<QueryParams, "page"> = {
   priceLb: 0,
   priceUb: 100000,
@@ -20,6 +22,7 @@ const initState: Omit<QueryParams, "page"> = {
 };
 const Search = () => {
   const { data: filterOptions } = useGetFilterData();
+  const [filterActive, setIsActive] = useState(false);
   const [page, setPage] = useState(1);
   const [queryOptions, setQueryOptions] =
     useState<Omit<QueryParams, "page">>(initState);
@@ -43,7 +46,29 @@ const Search = () => {
     <></>
   ) : (
     <div className={style["search"]}>
-      <Filter onChange={(params) => setQueryOptions(params)}></Filter>
+      <div className={style["filter-wrapper"]}>
+        <Filter
+          className={
+            filterActive ? style["active-filter"] : style["inactive-filter"]
+          }
+          onChange={(params) => setQueryOptions(params)}
+        ></Filter>
+        {!filterActive && (
+          <FontAwesomeIcon
+            icon={faSliders}
+            size="2x"
+            className={style["open-filter"]}
+            onClick={() => setIsActive(true)}
+          ></FontAwesomeIcon>
+        )}
+        {filterActive && (
+          <FontAwesomeIcon
+            icon={faX}
+            className={style["close-filter"]}
+            onClick={() => setIsActive(false)}
+          ></FontAwesomeIcon>
+        )}
+      </div>
       <section className={style["search-results"]}>
         <h2>Search results</h2>
         <ul className={style["search-results__list"]}>

@@ -48,7 +48,7 @@ const RangeSlider = memo(
         <div className={style["ranges"]}>
           <input
             min={lower}
-            max={range.upper}
+            max={upper}
             ref={lowerRef}
             value={range.lower}
             onChange={onChangeLower}
@@ -57,7 +57,7 @@ const RangeSlider = memo(
           />
           <input
             max={upper}
-            min={range.lower}
+            min={lower}
             value={range.upper}
             ref={upperRef}
             onChange={onChangeUpper}

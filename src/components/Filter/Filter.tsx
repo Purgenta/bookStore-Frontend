@@ -12,8 +12,9 @@ import { useState } from "react";
 import { QueryParams } from "../../hooks/requests/books/useGetBooks";
 type Props = {
   onChange: (params: Omit<QueryParams, "page">) => unknown;
+  className?: string;
 };
-const Filter = ({ onChange }: Props) => {
+const Filter = ({ onChange, className }: Props) => {
   const [sort, setSort] = useState("asc");
   const [price, setPrice] = useState({ priceLb: 0, priceUb: 100000 });
   const [orderBy, setOrderBy] = useState("price");
@@ -58,7 +59,7 @@ const Filter = ({ onChange }: Props) => {
     }
   }, [sort, price, orderBy, date, genres, searchName, publishers]);
   return (
-    <aside className={style["filter"]}>
+    <aside className={`${style["filter"]} ${className ? className : ""}`}>
       <ul className={style["filter-options"]}>
         <li>
           <input
