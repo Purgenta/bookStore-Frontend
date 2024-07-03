@@ -19,7 +19,7 @@ const Profile = () => {
           phone_number={data.phone_number}
           last_name={data.last_name}
           name={data.name}
-          prefferences={data.prefferences}
+          prefferences={data.preferences}
         ></Layout>
       )}
       <section className={style["profile-section"]}>
@@ -61,7 +61,7 @@ const Profile = () => {
         </aside>
         {data && (subroute === "general-information" || !subroute) && (
           <EditUserForm
-            adress={data.adress}
+            adress={data.address}
             onSuccess={() => mutate()}
             email={data.email}
             last_name={data.last_name}

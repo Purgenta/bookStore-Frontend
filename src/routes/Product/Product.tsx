@@ -17,7 +17,7 @@ export const Product = () => {
   const { id } = useParams();
   const { isAuthenticated } = useSelector(authenticationSelector);
   const { data } = useGetBookById(`${id}`);
-  const updateQuantity = useUpdateCartQuantity(Number(id));
+  const updateQuantity = useUpdateCartQuantity(id);
   const [quantity, setQuantity] = useState(1);
   let newPrice: number | null = null;
   const product = data ? data.product : null;
@@ -128,7 +128,7 @@ export const Product = () => {
             <Reviews
               canReview={data ? data.canReview : false}
               key={id}
-              product_id={id ? +id : 0}
+              product_id={id ? id : "0"}
             ></Reviews>
           </section>
           <div className={style["similiar-products__wrapper"]}>

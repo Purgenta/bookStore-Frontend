@@ -33,7 +33,7 @@ const CartItem = ({ item, onItemDelete, onQuantityChange }: Props) => {
   return (
     <tr key={item.title}>
       <td>
-        <img src={item.productImages[0].image_url}></img>
+        <img src={item.productImages[0]?.image_url}></img>
       </td>
       <td>{item.title}</td>
       <td>{`${item.price.toFixed(2)} \u20AC`}</td>

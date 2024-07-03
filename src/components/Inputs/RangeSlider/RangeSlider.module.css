@@ -1,47 +1,76 @@
-.range-wrapper {
+.slider {
   position: relative;
-  min-width: 15rem;
   width: 100%;
 }
-.range {
-  appearance: none;
-  pointer-events: none;
-  min-width: 15rem;
+.container {
+  margin: 0.5rem 0rem;
+  padding: 1rem 0rem;
   width: 100%;
-  background-color: transparent;
+  position: relative;
+  justify-content: center;
 }
-.ranges {
-  height: 0.8rem;
-}
-.range::-webkit-slider-thumb,
-.range,
-.full-range,
-.out-range {
+
+.slider__track,
+.slider__range,
+.slider__left-value,
+.slider__right-value {
   position: absolute;
+}
+
+.slider__track,
+.slider__range {
+  border-radius: 3px;
+  height: 5px;
+}
+
+.slider__track {
+  background-color: #ced4da;
+  width: 100%;
+  z-index: 1;
+}
+
+.slider__range {
+  background-color: #272727;
+  z-index: 2;
+}
+
+.slider__left-value,
+.slider__right-value {
+  color: #272727;
+  font-size: 12px;
+  margin-top: 20px;
+}
+
+.slider__left-value {
+  left: 6px;
+}
+
+.slider__right-value {
+  right: -4px;
+}
+.thumb,
+.thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.thumb {
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  height: 0;
+  width: 100%;
   outline: none;
 }
-.range::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  background-color: rgb(61, 58, 55);
-  height: 1.4rem;
-  width: 1.4rem;
-  border-radius: 50%;
-  top: 7px;
-}
-.left {
-  z-index: 4;
-}
-.right {
-  z-index: 4;
-}
-.full-range {
-  height: 5px;
-  background-color: rgb(65, 63, 63);
-  width: 100%;
-  margin-top: 1rem;
+
+.thumb--left {
   z-index: 3;
 }
-.range::-webkit-slider-thumb {
+
+.thumb--right {
+  z-index: 4;
+}
+.thumb::-webkit-slider-thumb {
   background-color: #f1f5f7;
   border: none;
   border-radius: 50%;
@@ -49,18 +78,20 @@
   cursor: pointer;
   height: 18px;
   width: 18px;
+  margin-top: 4px;
   pointer-events: all;
   position: relative;
 }
-.out-range {
-  background-color: gainsboro;
-  margin-top: 1rem;
-  height: 5px;
-}
-.price {
-  margin-top: 1.5rem;
-  padding: 0.1rem;
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
+
+.thumb::-moz-range-thumb {
+  background-color: #f1f5f7;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 0 1px 1px #ced4da;
+  cursor: pointer;
+  height: 18px;
+  width: 18px;
+  margin-top: 4px;
+  pointer-events: all;
+  position: relative;
 }

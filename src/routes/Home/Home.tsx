@@ -5,6 +5,7 @@ import { Product } from "../../types/product";
 import useGetFeaturedBooks from "../../hooks/requests/books/useGetFeaturedBooks";
 const Home = () => {
   const { data: featuredProducts } = useGetFeaturedBooks();
+  console.log(featuredProducts);
   return (
     <section className={style["featured-products"]}>
       <div className={style["featured-group"]}>

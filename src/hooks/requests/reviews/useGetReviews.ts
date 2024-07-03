@@ -6,7 +6,8 @@ type ReviewResponse = {
   hasNextPage: boolean;
   canReview: boolean;
 };
-const useGetReviews = (product_id: number, page: number) => {
+const useGetReviews = (product_id: string, page: number) => {
+  console.log(product_id, page);
   const axios = useAuthenticatedAxios();
   const key = `review/reviewsByProduct/${product_id}?page=${page}`;
   const getReview = async () => {

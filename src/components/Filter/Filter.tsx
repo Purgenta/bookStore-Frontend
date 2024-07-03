@@ -56,7 +56,18 @@ const Filter = ({ onChange }: Props) => {
         publishers,
       });
     }
-  }, [sort, price, orderBy, date, genres, searchName, publishers]);
+  }, [
+    sort,
+    price.priceLb,
+    price.priceUb,
+    orderBy,
+    date?.publishingDateLb,
+    date?.publishingDateUb,
+    genres,
+    searchName,
+    publishers,
+  ]);
+  console.log(filterOptions?.productInfo["_max"].price);
   return (
     <aside className={style["filter"]}>
       <ul className={style["filter-options"]}>
@@ -124,10 +135,8 @@ const Filter = ({ onChange }: Props) => {
           {filterOptions && (
             <Dropdown label="Price">
               <RangeSlider
-                labelLower=""
-                labelUpper=""
-                upper={filterOptions.productInfo._max.price}
-                lower={filterOptions.productInfo._min.price}
+                min={filterOptions.productInfo._min.price}
+                max={filterOptions.productInfo._max.price}
                 onChange={(lower, upper) =>
                   setPrice({ priceLb: lower, priceUb: upper })
                 }

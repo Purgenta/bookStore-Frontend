@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import useGetReviews from "../../hooks/requests/reviews/useGetReviews";
 import { mutate } from "swr";
 type ReviewsProps = {
-  product_id: number;
+  product_id: string;
   className?: string;
   canReview: boolean;
 };

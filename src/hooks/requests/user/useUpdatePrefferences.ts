@@ -4,7 +4,8 @@ import { addNotification } from "../../../redux/notification/notificationSlice";
 const useUpdatePrefferences = () => {
   const axios = useAuthenticatedAxios();
   const dispatch = useDispatch();
-  const setPrefferences = async (genre_id: number) => {
+  const setPrefferences = async (genre_id: string) => {
+    console.log(genre_id);
     try {
       await axios.post("user/prefferences", { genre_id });
       dispatch(

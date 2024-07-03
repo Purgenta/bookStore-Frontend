@@ -29,8 +29,8 @@ const useAuthenticatedAxios = () => {
     const responseInterceptor = axiosPrivateInstance.interceptors.response.use(
       (response) => response,
       async (error) => {
-        const previousRequest = error?.config;
-        if (error?.response?.status === 401 && !previousRequest.sent) {
+        if (error?.response?.status === 401) {
+          const previousRequest = error?.config;
           previousRequest.sent = true;
           try {
             const refresh = await refreshToken();

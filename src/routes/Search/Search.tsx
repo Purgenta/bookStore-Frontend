@@ -48,9 +48,10 @@ const Search = () => {
         <h2>Search results</h2>
         <ul className={style["search-results__list"]}>
           {isLoading && <Loading></Loading>}
-          {!data?.products.length && <h3>Search results came up empty...</h3>}
-          {!isLoading &&
-            data?.products &&
+          {!isLoading && !data?.products.length && (
+            <h3>Search results came up empty...</h3>
+          )}
+          {data?.products &&
             data.products.map((product) => (
               <li key={product.id}>
                 <FeaturedProduct product={product} />

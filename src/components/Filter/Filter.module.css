@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  background-color: var(----highlight-background-color);
 }
 .filter-options > li:first-child {
   padding: 0.4rem;

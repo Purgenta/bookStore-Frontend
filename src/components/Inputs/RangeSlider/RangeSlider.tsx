@@ -1,88 +1,87 @@
-import { useState, useRef, useEffect } from "react";
-
-import { memo } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import style from "./RangeSlider.module.css";
-type RangeSliderProps = {
-  lower: number;
-  labelUpper: string;
-  labelLower: string;
-  upper: number;
-  symbol?: JSX.Element;
-  onChange: (lower: number, upper: number) => unknown;
+type Props = {
+  min: number;
+  max: number;
+  onChange: (min: number, max: number) => unknown;
 };
-const RangeSlider = memo(
-  ({ lower, upper, labelLower, labelUpper, onChange }: RangeSliderProps) => {
-    lower = +Math.floor(lower);
-    upper = +Math.ceil(upper);
-    const [range, setRange] = useState({
-      lower,
-      upper,
-    });
-    const lowerRef = useRef<HTMLInputElement>(null!);
-    const upperRef = useRef<HTMLInputElement>(null!);
-    useEffect(() => {
-      onChange(range.lower, range.upper);
-    }, [range]);
-    const onChangeLower = () => {
-      const value = lowerRef.current.value;
-      setRange((prev) => {
-        return {
-          ...prev,
-          lower: +value,
-        };
-      });
-    };
-    const onChangeUpper = () => {
-      const value = upperRef.current.value;
-      setRange((prev) => {
-        return {
-          ...prev,
-          upper: +value,
-        };
-      });
-    };
-    const rangeWidth = (range.upper - range.lower) / (upper - lower);
-    const leftOffSet = 100 - ((upper - range.lower) / (upper - lower)) * 100;
-    return (
-      <div className={style["range-wrapper"]}>
-        <div className={style["ranges"]}>
-          <input
-            min={lower}
-            max={range.upper}
-            ref={lowerRef}
-            value={range.lower}
-            onChange={onChangeLower}
-            className={`${style["range"]} ${style["left"]}`}
-            type={"range"}
-          />
-          <input
-            max={upper}
-            min={range.lower}
-            value={range.upper}
-            ref={upperRef}
-            onChange={onChangeUpper}
-            className={`${style["range"]} ${style["right"]}`}
-            type={"range"}
-          ></input>
-          <div
-            className={style["full-range"]}
-            style={{
-              width: `${rangeWidth * lowerRef.current?.offsetWidth}px`,
-              left: `${leftOffSet}%`,
-            }}
-          />
-          <div className={style["out-range"]} />
-        </div>
-        <div className={style["price"]}>
-          <h3 className={style["price-lower"]}>{`${range.lower.toFixed(
-            2
-          )} ${labelLower}`}</h3>
-          <h3 className={style["price-higher"]}>{`${range.upper.toFixed(
-            2
-          )} ${labelUpper}`}</h3>
-        </div>
+const MultiRangeSlider = ({ min, max, onChange }: Props) => {
+  const [minVal, setMinVal] = useState(min);
+  const [maxVal, setMaxVal] = useState(max);
+  console.log(minVal, maxVal);
+  useEffect(() => {
+    if (minVal === undefined && min !== undefined) {
+      setMinVal(min);
+    }
+    if (maxVal === undefined && max !== undefined) {
+      setMaxVal(max);
+    }
+  }, [min, max, minVal, maxVal]);
+  const minValRef = useRef(min);
+  const maxValRef = useRef(max);
+  const range = useRef<HTMLDivElement>(null!);
+  const getPercent = useCallback(
+    (value: number) => Math.round(((value - min) / (max - min)) * 100),
+    [min, max]
+  );
+
+  useEffect(() => {
+    const minPercent = getPercent(minVal);
+    const maxPercent = getPercent(maxValRef.current);
+
+    if (range.current) {
+      range.current.style.left = `${minPercent}%`;
+      range.current.style.width = `${maxPercent - minPercent}%`;
+    }
+  }, [minVal, getPercent]);
+  useEffect(() => {
+    const minPercent = getPercent(minValRef.current);
+    const maxPercent = getPercent(maxVal);
+
+    if (range.current) {
+      range.current.style.width = `${maxPercent - minPercent}%`;
+    }
+  }, [maxVal, getPercent]);
+  useEffect(() => {
+    onChange(minVal, maxVal);
+  }, [minVal, maxVal]);
+  console.log(minVal, maxVal);
+  return (
+    <div className={style["container"]}>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        value={minVal}
+        onChange={(event) => {
+          const value = Math.min(Number(event.target.value), maxVal - 1);
+          setMinVal(value);
+          minValRef.current = value;
+        }}
+        className={`${style["thumb"]} ${style["thumb--left"]}`}
+        style={{ zIndex: minVal > max - 100 ? "5" : "0" }}
+      />
+      <input
+        type="range"
+        min={min}
+        max={max}
+        value={maxVal}
+        onChange={(event) => {
+          const value = Math.max(Number(event.target.value), minVal + 1);
+          setMaxVal(value);
+          maxValRef.current = value;
+        }}
+        className={`${style["thumb"]} ${style["thumb--right"]}`}
+      />
+
+      <div className={style["slider"]}>
+        <div className={style["slider__track"]} />
+        <div ref={range} className={style["slider__range"]} />
+        <div className={style["slider__left-value"]}>{minVal}</div>
+        <div className={style["slider__right-value"]}>{maxVal}</div>
       </div>
-    );
-  }
-);
-export default RangeSlider;
+    </div>
+  );
+};
+
+export default MultiRangeSlider;

@@ -1,9 +1,8 @@
 import useAuthenticatedAxios from "../axios/useAuthenticatedAxios";
 import { useDispatch } from "react-redux";
 import { addNotification } from "../redux/notification/notificationSlice";
-import { nanoid } from "@reduxjs/toolkit";
-import { AxiosError, isAxiosError } from "axios";
-const useUpdateCartQuantity = (product_id: number) => {
+import { isAxiosError } from "axios";
+const useUpdateCartQuantity = (product_id: string) => {
   const dispatch = useDispatch();
   const axios = useAuthenticatedAxios();
   return async (quantity: number) => {

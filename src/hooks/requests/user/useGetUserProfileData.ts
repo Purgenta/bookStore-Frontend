@@ -8,8 +8,8 @@ type Profile = {
   name: string;
   phone_number: string;
   password: string;
-  adress: string;
-  prefferences: {
+  address: string;
+  preferences: {
     genre: Genre;
   } | null;
 };

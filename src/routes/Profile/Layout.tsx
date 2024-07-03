@@ -29,6 +29,7 @@ const Layout = ({
   mutate,
 }: Props) => {
   const { data } = useGetAllGenres();
+  console.log(prefferences);
   const setPrefferences = useUpdatePrefferences();
   return (
     <header className={style["profile-overview"]}>
@@ -81,7 +82,8 @@ const Layout = ({
                 value={prefferences?.genre.id || undefined}
                 onChange={async (event) => {
                   if (event.target.value !== "Pick a category") {
-                    await setPrefferences(+event.target.value);
+                    console.log(event.target.value);
+                    await setPrefferences(event.target.value);
                     mutate();
                   }
                 }}
@@ -89,6 +91,7 @@ const Layout = ({
               >
                 <option>Pick a category</option>
                 {data.map((genre) => {
+                  console.log(genre.id);
                   return (
                     <option key={genre.id} value={genre.id}>
                       {genre.name}

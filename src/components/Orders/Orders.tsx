@@ -58,7 +58,7 @@ const Orders = () => {
                   </h3>
                   <h3>
                     Created <br></br>
-                    {new Date(order.ordered_at).toLocaleDateString("en-GB", {
+                    {new Date(order.orderedAt).toLocaleDateString("en-GB", {
                       day: "numeric",
                       month: "numeric",
                       year: "numeric",
@@ -66,12 +66,12 @@ const Orders = () => {
                   </h3>
                   <h3>
                     Order status: <br></br>
-                    {order.order_status}
+                    {order.orderStatus}
                   </h3>
                   <button
                     className={style["review-btn"]}
                     disabled={
-                      order.order_status !== "DELIVERED" ||
+                      order.orderStatus !== "DELIVERED" ||
                       order.orderReview !== null
                     }
                     onClick={() => {

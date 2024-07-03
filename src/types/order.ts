@@ -7,11 +7,11 @@ type OrderReview = {
 };
 export type Order = {
   id: number;
-  order_status: OrderStatus;
-  ordered_at: string;
+  orderStatus: OrderStatus;
+  orderedAt: string;
   orderReview: null | OrderReview;
   cart: {
     cartItems: Product[];
-    order_status: OrderStatus;
+    orderStatus: OrderStatus;
   };
 };
